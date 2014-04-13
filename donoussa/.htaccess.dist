@@ -1,0 +1,10 @@
+Options +FollowSymLinks -Indexes
+
+<IfModule mod_rewrite.c>
+
+RewriteEngine On
+RewriteCond $1 !^(index\.php|robots\.txt|sitemap\.xml)
+RewriteCond %{REQUEST_URI} !\.(js|css|jpg|png|ico|svg|ttf|woff|eot)$
+RewriteRule ^(.*)$ index.php
+
+</IfModule>hp
