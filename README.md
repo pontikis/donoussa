@@ -14,6 +14,14 @@ Release: 0.7.0 (13 Apr 2014) - View CHANGELOG [here][CHANGELOG]
 License [MIT][mit]
 [mit]: https://raw.github.com/pontikis/donoussa/master/MIT_LICENSE
 
+At a glance
+-------------
+* copy index.dist.php to /index.php (front controller)
+* copy .htaccess.dist to /.htaccess (mod_rewrite required)
+* copy settings.dist.php to conf/settings.php and configure
+* copy init.dist.php to conf/init.php (configure if needed)
+* create database with two tables (page_properties, page_dependencies), see schema_mysql.sql
+* start coding
 
 Documentation
 -------------
