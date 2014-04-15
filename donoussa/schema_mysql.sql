@@ -25,10 +25,10 @@ DROP TABLE IF EXISTS `page_properties`;
 CREATE TABLE `page_properties` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `page_id` varchar(200) NOT NULL,
+  `real_url` varchar(200) NOT NULL,
+  `unique_url` tinyint(4) NOT NULL,
   `tag` varchar(200) DEFAULT NULL,
   `package` varchar(200) DEFAULT NULL,
-  `url` varchar(200) NOT NULL,
-  `real_url` varchar(200) NOT NULL,
   `auth_required` tinyint(4) NOT NULL,
   `roles` varchar(50) NOT NULL,
   `title` varchar(200) DEFAULT NULL,
@@ -37,7 +37,7 @@ CREATE TABLE `page_properties` (
   `footer` varchar(200) NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `page_id` (`page_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=24 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=25 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -87,7 +87,25 @@ CREATE TABLE `page_dependencies` (
   `page_js` varchar(200) DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `page_id` (`page_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=24 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=25 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `page_url`
+--
+
+DROP TABLE IF EXISTS `page_url`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `page_url` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `page_id` varchar(200) NOT NULL,
+  `url` varchar(200) NOT NULL,
+  `request_type` tinyint(4) NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `idx2_url_unique` (`url`),
+  KEY `idx1_page_id` (`page_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=27 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -99,4 +117,4 @@ CREATE TABLE `page_dependencies` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2014-04-13 19:21:00
+-- Dump completed on 2014-04-15 21:54:00

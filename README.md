@@ -9,7 +9,7 @@ Donoussa is a free and Open Source software under MIT License. It could be usefu
 Copyright [Christos Pontikis][copyright]
 [copyright]: http://www.pontikis.net
 
-Release: 0.7.0 (13 Apr 2014) - View CHANGELOG [here][CHANGELOG]
+Release: 0.8.0 (15 Apr 2014) - View CHANGELOG [here][CHANGELOG]
 [CHANGELOG]: https://raw.github.com/pontikis/donoussa/master/CHANGELOG.md
 
 License [MIT][mit]
@@ -21,7 +21,7 @@ At a glance
 * copy .htaccess.dist to /.htaccess (mod_rewrite required)
 * copy settings.dist.php to conf/settings.php and configure
 * copy init.dist.php to conf/init.php (configure if needed)
-* create database with two tables (page_properties, page_dependencies), see schema_mysql.sql
+* add donoussa tables in database (page_properties, page_dependencies, page_url), see schema_mysql.sql
 * start coding
 
 Documentation

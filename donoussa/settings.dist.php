@@ -63,7 +63,7 @@ $conf['class'] = array(
 	'class_swift_mailer_path' => '/Swift-5.0.3/lib/swift_required.php',
 
 	'class_jui_filter_rules_php_path' => '/jui_filter_rules_v1.0.3/jui_filter_rules.php',
-	'class_jui_datagrid_php_path' => '/jui_datagrid_v0.9.1/jui_datagrid.php', 	// TODO replace dev version
+	'class_jui_datagrid_php_path' => '/jui_datagrid_v0.9.1/jui_datagrid.php'
 
 );
 

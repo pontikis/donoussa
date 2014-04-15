@@ -10,6 +10,11 @@ License [MIT][mit]
 [mit]: https://raw.github.com/pontikis/donoussa/master/MIT_LICENSE
 
 
+Release 0.8.0 (15 Apr 2014)
+---------------------------
+* table page_url added (additionally contains ajax urls)
+* Bug fix with memcached usage
+
 Release 0.7.0 (13 Apr 2014)
 ---------------------------
 * Class donoussa

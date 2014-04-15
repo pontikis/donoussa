@@ -28,7 +28,7 @@ if($app->front_controller()) {
 	} else {
 		switch($app->request_type) {
 			case 'regular':
-				$page_urls = $app->page_urls;
+				$section_urls = $app->section_urls;
 				if($app->model)
 					include_once $app->model;
 
