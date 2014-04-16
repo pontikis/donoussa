@@ -10,7 +10,7 @@
  * @author     Christos Pontikis http://pontikis.net
  * @copyright  Christos Pontikis
  * @license    MIT http://opensource.org/licenses/MIT
- * @version    0.8.0 (15 Apr 2014)
+ * @version    0.8.1 (16 Apr 2014)
  */
 class donoussa {
 
@@ -24,7 +24,7 @@ class donoussa {
 	public function __construct(data_source $ds, $dependencies, $config) {
 
 		// initialize ----------------------------------------------------------
-		$this->version = '0.8.0';
+		$this->version = '0.8.1';
 		$this->ds = $ds;
 		$this->dependencies = $dependencies;
 
@@ -421,89 +421,71 @@ class donoussa {
 	 */
 	private function create_page_dependencies_html() {
 
-		$ds = $this->ds;
 		$config = $this->config;
-		$page_id = $this->page_id;
-
+		$dependencies = $this->dependencies;
+		$page_properties = $this->page_properties;
 		$html = '';
-		$mc_key = $config['memcached_keys_prefix'] . '_' . 'page_dep_html_' . sha1($page_id) . '_' . $config['app_locale'];
-		if($config['memcached_keys_prefix']) {
-			$html = $ds->pull_from_memcached($mc_key);
-		}
 
-		if(!$html) {
+		foreach($this->page_depedencies as $key => $page_dep) {
 
-			$html = '';
+			$dep = $dependencies[$key];
+			$dep_default = $dep['default'];
 
-			$dependencies = $this->dependencies;
-			$page_properties = $this->page_properties;
-
-			foreach($this->page_depedencies as $key => $page_dep) {
-
-				$dep = $dependencies[$key];
-				$dep_default = $dep['default'];
-
-				switch($dep['type']) {
-					case 'css':
-						$elem_id = array_key_exists('element_id', $dep) ? 'id="' . $dep['element_id'] . '" ' : '';
-						if($page_dep == 1) {
-							if(array_key_exists('session', $dep) && isset($_SESSION[$dep['session']['variable']])) {
-								$href = $dep['session']['values'][$_SESSION[$dep['session']['variable']]];
-								$href = (filter_var($href, FILTER_VALIDATE_URL) === FALSE) ? C_LIB_FRONT_END_URL . $href : $href;
-							} else {
-								if($key == 'page_css') {
-									$href = C_PROJECT_URL . $page_properties['real_url'] . '/' . $dep_default;
-								} else if($key == 'common_css') {
-									$href = C_PROJECT_URL . $dep_default;
-								} else {
-									$href = (filter_var($dep_default, FILTER_VALIDATE_URL) === FALSE) ? C_LIB_FRONT_END_URL . $dep_default : $dep_default;
-								}
-							}
+			switch($dep['type']) {
+				case 'css':
+					$elem_id = array_key_exists('element_id', $dep) ? 'id="' . $dep['element_id'] . '" ' : '';
+					if($page_dep == 1) {
+						if(array_key_exists('session', $dep) && isset($_SESSION[$dep['session']['variable']])) {
+							$href = $dep['session']['values'][$_SESSION[$dep['session']['variable']]];
+							$href = (filter_var($href, FILTER_VALIDATE_URL) === FALSE) ? C_LIB_FRONT_END_URL . $href : $href;
 						} else {
-							$href = $page_dep;
-						}
-						$html .= '<link ' . $elem_id . 'rel="stylesheet" type="text/css" href="' . $href . '">"' . PHP_EOL;
-						break;
-
-					case 'js':
-						if($page_dep == 1) {
-
-							if(array_key_exists('locale', $dep)) {
-								if(array_key_exists($config['app_locale'], $dep['locale'])) {
-									$src = $dep['locale'][$config['app_locale']];
-								} else {
-									$src = $dep_default ? $dep_default : '';
-								}
-								$src = (filter_var($src, FILTER_VALIDATE_URL) === FALSE) ? C_LIB_FRONT_END_URL . $src : $src;
+							if($key == 'page_css') {
+								$href = C_PROJECT_URL . $page_properties['real_url'] . '/' . $dep_default;
+							} else if($key == 'common_css') {
+								$href = C_PROJECT_URL . $dep_default;
 							} else {
-								if($key == 'page_js') {
-									$src = C_PROJECT_URL . $page_properties['real_url'] . '/' . $dep_default;
-								} else if($key == 'common_js') {
-									$src = C_PROJECT_URL . $dep_default;
-								} else {
-									$src = (filter_var($dep_default, FILTER_VALIDATE_URL) === FALSE) ? C_LIB_FRONT_END_URL . $dep_default : $dep_default;
-								}
+								$href = (filter_var($dep_default, FILTER_VALIDATE_URL) === FALSE) ? C_LIB_FRONT_END_URL . $dep_default : $dep_default;
 							}
+						}
+					} else {
+						$href = $page_dep;
+					}
+					$html .= '<link ' . $elem_id . 'rel="stylesheet" type="text/css" href="' . $href . '">"' . PHP_EOL;
+					break;
+
+				case 'js':
+					if($page_dep == 1) {
+
+						if(array_key_exists('locale', $dep)) {
+							if(array_key_exists($config['app_locale'], $dep['locale'])) {
+								$src = $dep['locale'][$config['app_locale']];
+							} else {
+								$src = $dep_default ? $dep_default : '';
+							}
+							$src = (filter_var($src, FILTER_VALIDATE_URL) === FALSE) ? C_LIB_FRONT_END_URL . $src : $src;
 						} else {
-							$src = $page_dep;
-						}
-
-						if($src) {
-							if(array_key_exists('condition', $dep)) {
-								echo $dep['condition']['start'] . PHP_EOL;
-							}
-							$html .= '<script src="' . $src . '" type="text/javascript"></script>' . PHP_EOL;
-							if(array_key_exists('condition', $dep)) {
-								echo $dep['condition']['end'] . PHP_EOL;
+							if($key == 'page_js') {
+								$src = C_PROJECT_URL . $page_properties['real_url'] . '/' . $dep_default;
+							} else if($key == 'common_js') {
+								$src = C_PROJECT_URL . $dep_default;
+							} else {
+								$src = (filter_var($dep_default, FILTER_VALIDATE_URL) === FALSE) ? C_LIB_FRONT_END_URL . $dep_default : $dep_default;
 							}
 						}
-						break;
-				}
+					} else {
+						$src = $page_dep;
+					}
 
-			}
-
-			if($config['memcached_keys_prefix']) {
-				$ds->push_to_memcached($mc_key, $html);
+					if($src) {
+						if(array_key_exists('condition', $dep)) {
+							$html .= $dep['condition']['start'] . PHP_EOL;
+						}
+						$html .= '<script src="' . $src . '" type="text/javascript"></script>' . PHP_EOL;
+						if(array_key_exists('condition', $dep)) {
+							$html .= $dep['condition']['end'] . PHP_EOL;
+						}
+					}
+					break;
 			}
 
 		}
@@ -570,9 +552,6 @@ class donoussa {
 
 			foreach($a_locales as $locale) {
 				$mc_key = $config['memcached_keys_prefix'] . '_' . 'page_dep_' . sha1($page_id) . '_' . $locale;
-				$ds->delete_from_memcached($mc_key);
-
-				$mc_key = $config['memcached_keys_prefix'] . '_' . 'page_dep_html_' . sha1($page_id) . '_'  . $locale;
 				$ds->delete_from_memcached($mc_key);
 			}
 		}

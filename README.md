@@ -9,7 +9,7 @@ Donoussa is a free and Open Source software under MIT License. It could be usefu
 Copyright [Christos Pontikis][copyright]
 [copyright]: http://www.pontikis.net
 
-Release: 0.8.0 (15 Apr 2014) - View CHANGELOG [here][CHANGELOG]
+Release: 0.8.1 (16 Apr 2014) - View CHANGELOG [here][CHANGELOG]
 [CHANGELOG]: https://raw.github.com/pontikis/donoussa/master/CHANGELOG.md
 
 License [MIT][mit]
