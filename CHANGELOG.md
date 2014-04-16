@@ -9,6 +9,10 @@ Copyright [Christos Pontikis][copyright]
 License [MIT][mit]
 [mit]: https://raw.github.com/pontikis/donoussa/master/MIT_LICENSE
 
+Release 0.8.2 (16 Apr 2014)
+---------------------------
+* Various improvements
+
 Release 0.8.1 (16 Apr 2014)
 ---------------------------
 * Bug fix with memcached usage

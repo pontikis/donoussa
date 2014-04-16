@@ -10,7 +10,7 @@
  * @author     Christos Pontikis http://pontikis.net
  * @copyright  Christos Pontikis
  * @license    MIT http://opensource.org/licenses/MIT
- * @version    0.8.1 (16 Apr 2014)
+ * @version    0.8.2 (16 Apr 2014)
  */
 class donoussa {
 
@@ -24,7 +24,7 @@ class donoussa {
 	public function __construct(data_source $ds, $dependencies, $config) {
 
 		// initialize ----------------------------------------------------------
-		$this->version = '0.8.1';
+		$this->version = '0.8.2';
 		$this->ds = $ds;
 		$this->dependencies = $dependencies;
 
@@ -206,10 +206,11 @@ class donoussa {
 		}
 		$this->page_properties = $page_properties;
 
-		$this->page_title = $page_properties['title'];
-		$this->page_description = $page_properties['description'];
-		$this->real_url = $page_properties['real_url'];
-
+		if($page_properties) {
+			$this->page_title = $page_properties['title'];
+			$this->page_description = $page_properties['description'];
+			$this->real_url = $page_properties['real_url'];
+		}
 
 		if($this->request_type == "regular") {
 
@@ -325,7 +326,7 @@ class donoussa {
 				$this->header = $header;
 			} else {
 				$this->last_error_code = 'invalid_header_file';
-				$this->last_error = __METHOD__ . ' ' . "{$config['messages'][$this->last_error_code]} ($header): $ds->last_error";
+				$this->last_error = __METHOD__ . ' ' . "{$config['messages'][$this->last_error_code]} ($header)";
 				return false;
 			}
 
@@ -333,7 +334,7 @@ class donoussa {
 				$this->view = $view;
 			} else {
 				$this->last_error_code = 'invalid_view_file';
-				$this->last_error = __METHOD__ . ' ' . "{$config['messages'][$this->last_error_code]} ($view): $ds->last_error";
+				$this->last_error = __METHOD__ . ' ' . "{$config['messages'][$this->last_error_code]} ($view)";
 				return false;
 			}
 
@@ -341,7 +342,7 @@ class donoussa {
 				$this->footer = $footer;
 			} else {
 				$this->last_error_code = 'invalid_footer_file';
-				$this->last_error = __METHOD__ . ' ' . "{$config['messages'][$this->last_error_code]} ($footer): $ds->last_error";
+				$this->last_error = __METHOD__ . ' ' . "{$config['messages'][$this->last_error_code]} ($footer)";
 				return false;
 			}
 
@@ -359,7 +360,7 @@ class donoussa {
 
 			if(!$this->is_ajax()) {
 				$this->last_error_code = 'direct_access_of_ajax_request';
-				$this->last_error = __METHOD__ . ' ' . "{$config['messages'][$this->last_error_code]} ($action_url): $ds->last_error";
+				$this->last_error = __METHOD__ . ' ' . "{$config['messages'][$this->last_error_code]} ($action_url)";
 				return false;
 			}
 
@@ -368,7 +369,7 @@ class donoussa {
 				// user is not authenticated
 				if((!isset($_SESSION['user_id'])) || ($_SESSION['user_id'] <= '0')) {
 					$this->last_error_code = 'user_authorization_needed';
-					$this->last_error = __METHOD__ . ' ' . "{$config['messages'][$this->last_error_code]} ($action_url): $ds->last_error";
+					$this->last_error = __METHOD__ . ' ' . "{$config['messages'][$this->last_error_code]} ($action_url)";
 					return false;
 				} else {
 
@@ -377,7 +378,7 @@ class donoussa {
 						$a_roles = explode(',', $page_properties['roles']);
 						if(!in_array($_SESSION['user_role_id'], $a_roles)) {
 							$this->last_error_code = 'access_denied';
-							$this->last_error = __METHOD__ . ' ' . "{$config['messages'][$this->last_error_code]} ($action_url): $ds->last_error";
+							$this->last_error = __METHOD__ . ' ' . "{$config['messages'][$this->last_error_code]} ($action_url)";
 							return false;
 						}
 					}
@@ -389,7 +390,7 @@ class donoussa {
 			if(session_id() != '') {
 				if($_SESSION['X-CSRF-Token'] !== $_SERVER['HTTP_X_CSRF_TOKEN']) {
 					$this->last_error_code = 'csrf_token_not_match';
-					$this->last_error = __METHOD__ . ' ' . "{$config['messages'][$this->last_error_code]} ($action_url): $ds->last_error";
+					$this->last_error = __METHOD__ . ' ' . "{$config['messages'][$this->last_error_code]} ($action_url)";
 					return false;
 				}
 			}
@@ -398,7 +399,7 @@ class donoussa {
 
 			if(!file_exists($this->ajax_request) || !is_file($this->ajax_request)) {
 				$this->last_error_code = 'invalid_ajax_request';
-				$this->last_error = __METHOD__ . ' ' . "{$config['messages'][$this->last_error_code]} ($action_url): $ds->last_error";
+				$this->last_error = __METHOD__ . ' ' . "{$config['messages'][$this->last_error_code]} ($action_url)";
 				return false;
 			}
 
@@ -408,8 +409,21 @@ class donoussa {
 			}
 
 		} else {
-			$this->redirect = C_PROJECT_HOST . $section_urls[$config['page_id_404_page_not_found']];
-			return true;
+
+			// LOG LINE
+			if($config['keep_log']) {
+				$this->log = 'UNKNOWN REQUEST: ' . $action_url;
+			}
+
+			if($this->is_ajax()) {
+				$this->last_error_code = 'invalid_ajax_request';
+				$this->last_error = __METHOD__ . ' ' . "{$config['messages'][$this->last_error_code]} ($action_url)";
+				return false;
+			} else {
+				$this->redirect = C_PROJECT_HOST . $section_urls[$config['page_id_404_page_not_found']];
+				return true;
+			}
+
 		}
 
 		return true;

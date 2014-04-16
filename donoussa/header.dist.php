@@ -12,8 +12,28 @@
 
 	<script type="text/javascript">
 		$.ajaxSetup({
-			url: "<?php print C_PROJECT_URL . $app->real_url . '/' ?>"
-		});
+			url: "<?php print C_PROJECT_URL . $app->real_url . '/' ?>",
+			error: function(jqXHR, exception) {
+				if(jqXHR.responseText) {
+					alert(jqXHR.responseText.replace(/<.*?>/g, ''));
+				} else {
+					if(jqXHR.status === 0) {
+						alert('Not connected. Please, verify network.');
+					} else if(jqXHR.status == 404) {
+						alert('Requested page not found. [404]');
+					} else if(jqXHR.status == 500) {
+						alert('Internal Server Error [500].');
+					} else if(exception === 'parsererror') {
+						alert('Requested JSON parse failed.');
+					} else if(exception === 'timeout') {
+						alert('Time out error.');
+					} else if(exception === 'abort') {
+						alert('Ajax request aborted.');
+					} else {
+						alert('Uncaught Error.');
+					}
+				}
+			});
 
 		<?php if(isset($_SESSION['X-CSRF-Token'])) { ?>
 		$(document).ajaxSend(function(e, xhr, options) {
