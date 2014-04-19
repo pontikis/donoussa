@@ -3,6 +3,10 @@
 $conf['project_url'] = '/url/to/project';
 $conf['project_path'] = '/path/to/project';
 
+// sessions --------------------------------------------------------------------
+$conf['use_sessions'] = true;
+$conf['session_save_path'] = '/var/lib/php5/myapp';
+
 // log settings ----------------------------------------------------------------
 $conf['log_errors'] = false;
 $conf['error_log'] = '/path/to/error.log';
@@ -37,6 +41,7 @@ $conf['mc'] = array(
 	),
 	'use_memcached' => true
 );
+$conf['memcached_keys_prefix'] = 'myapp';
 
 // common page_id  -------------------------------------------------------------
 // TODO
@@ -48,9 +53,6 @@ $conf['common_page_id'] = array(
 );
 
 $conf['404'] = '/app/404'; // TODO
-
-// use sessions  ---------------------------------------------------------------
-$conf['use_sessions'] = true;
 
 // class path ------------------------------------------------------------------
 $conf['class'] = array(
@@ -296,7 +298,20 @@ $conf['auth'] = array(
 
 	'user_photos' => '/files/uploads/user_photos',
 
-	'email_verification' => 'registration', // never, optional, registration, always
+	/**
+	| never.......: DO NOT create verification code, DO NOT ask for verification
+	|
+	| optional....: create verification code, ask for verification but
+	|               do not restrict access if user has not verified his/her email
+	|
+	| registration: create verification code, ask for verification and
+	|               restrict access after login if user has not verified his/her registration email
+	|               (this is the DEFAULT option)
+	|
+	| always......: same with 'registration', but for any email (not only for registration email)
+	|               (so, if user changes his/her email, this must be verified, otherwise use cannot login)
+	 */
+	'email_verification' => 'registration',
 
 	// username ----------------------------------------------------------------
 	'username_min_chars' => 6,

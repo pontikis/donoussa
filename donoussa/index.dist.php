@@ -26,9 +26,9 @@ if($app->front_controller()) {
 		header('Location: ' . $app->redirect);
 		exit;
 	} else {
+		$section_urls = $app->section_urls;
 		switch($app->request_type) {
 			case 'regular':
-				$section_urls = $app->section_urls;
 				if($app->model)
 					include_once $app->model;
 

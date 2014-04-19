@@ -1,6 +1,6 @@
 -- MySQL dump 10.14  Distrib 5.5.30-MariaDB, for Linux (x86_64)
 --
--- Host: localhost
+-- Host: localhost    Database: dev_ekapty
 -- ------------------------------------------------------
 -- Server version	5.5.30-MariaDB
 
@@ -33,11 +33,13 @@ CREATE TABLE `page_properties` (
   `roles` varchar(50) NOT NULL,
   `title` varchar(200) DEFAULT NULL,
   `description` varchar(160) DEFAULT NULL,
+  `model_filename` varchar(200) DEFAULT NULL,
+  `view_filename` varchar(200) DEFAULT NULL,
   `header` varchar(200) NOT NULL,
   `footer` varchar(200) NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `page_id` (`page_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=25 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=26 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -87,7 +89,7 @@ CREATE TABLE `page_dependencies` (
   `page_js` varchar(200) DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `page_id` (`page_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=25 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=26 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -105,7 +107,7 @@ CREATE TABLE `page_url` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `idx2_url_unique` (`url`),
   KEY `idx1_page_id` (`page_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=27 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=73 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -117,4 +119,4 @@ CREATE TABLE `page_url` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2014-04-15 21:54:00
+-- Dump completed on 2014-04-19 18:55:07

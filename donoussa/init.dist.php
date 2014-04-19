@@ -1,10 +1,13 @@
 <?php
 /**
  * *****************************************************************************
- * SESSION START
+ * SESSION
  * *****************************************************************************
  */
 if($conf['use_sessions']) {
+	if($conf['session_save_path']) {
+		ini_set('session.save_path', $conf['session_save_path']);
+	}
 	session_start();
 }
 

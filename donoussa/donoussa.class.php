@@ -10,7 +10,7 @@
  * @author     Christos Pontikis http://pontikis.net
  * @copyright  Christos Pontikis
  * @license    MIT http://opensource.org/licenses/MIT
- * @version    0.8.2 (16 Apr 2014)
+ * @version    0.8.3 (19 Apr 2014)
  */
 class donoussa {
 
@@ -24,7 +24,7 @@ class donoussa {
 	public function __construct(data_source $ds, $dependencies, $config) {
 
 		// initialize ----------------------------------------------------------
-		$this->version = '0.8.2';
+		$this->version = '0.8.3';
 		$this->ds = $ds;
 		$this->dependencies = $dependencies;
 
@@ -81,6 +81,8 @@ class donoussa {
 		$this->page_depedencies_html = null;
 		$this->model = null;
 		$this->view = null;
+		$this->model_filename = null;
+		$this->view_filename = null;
 		$this->header = null;
 		$this->footer = null;
 		$this->ajax_request = null;
@@ -210,6 +212,8 @@ class donoussa {
 			$this->page_title = $page_properties['title'];
 			$this->page_description = $page_properties['description'];
 			$this->real_url = $page_properties['real_url'];
+			$this->model_filename = $page_properties['model_filename'] ? $page_properties['model_filename'] : $config['model_filename'];
+			$this->view_filename = $page_properties['view_filename'] ? $page_properties['view_filename'] : $config['view_filename'];
 		}
 
 		if($this->request_type == "regular") {
@@ -313,8 +317,8 @@ class donoussa {
 				}
 			}
 
-			$model = C_PROJECT_PATH . $page_properties['real_url'] . '/' . $config['model_filename'];
-			$view = C_PROJECT_PATH . $page_properties['real_url'] . '/' . $config['view_filename'];
+			$model = C_PROJECT_PATH . $this->real_url . '/' . $this->model_filename;
+			$view = C_PROJECT_PATH . $this->real_url . '/' . $this->view_filename;
 			$header = C_PROJECT_PATH . $page_properties['header'];
 			$footer = C_PROJECT_PATH . $page_properties['footer'];
 
@@ -476,7 +480,9 @@ class donoussa {
 							} else {
 								$src = $dep_default ? $dep_default : '';
 							}
-							$src = (filter_var($src, FILTER_VALIDATE_URL) === FALSE) ? C_LIB_FRONT_END_URL . $src : $src;
+							if($src) {
+								$src = (filter_var($src, FILTER_VALIDATE_URL) === FALSE) ? C_LIB_FRONT_END_URL . $src : $src;
+							}
 						} else {
 							if($key == 'page_js') {
 								$src = C_PROJECT_URL . $page_properties['real_url'] . '/' . $dep_default;
