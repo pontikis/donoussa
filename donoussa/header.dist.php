@@ -35,11 +35,32 @@
 				}
 			});
 
-		<?php if(isset($_SESSION['X-CSRF-Token'])) { ?>
+		<?php if(session_id() != '') { ?>
 		$(document).ajaxSend(function(e, xhr, options) {
-			xhr.setRequestHeader("X-CSRF-Token", "<?php print $_SESSION['X-CSRF-Token']?>");
+			xhr.setRequestHeader("X-CSRF-Token", "<?php print sha1(session_id() . $app->page_id) ?>");
 		});
 		<?php } ?>
+
+
+		Modernizr.load([
+			{
+				// The test: does the browser understand Media Queries?
+				test: Modernizr.mq("only all"),
+				// If not, load the respond.js file
+				nope: "<?php print C_LIB_FRONT_END_URL . $conf['dependencies']['respond_js']['default'] ?>"
+			}
+		]);
+
+		function show_modal(elem_modal, elem_modal_content, content_html, elem_focus) {
+			if(elem_focus) {
+				elem_modal.on('hidden.bs.modal', function (e) {
+					elem_focus.focus();
+				});
+			}
+			elem_modal_content.html(content_html);
+			elem_modal.modal("show");
+		}
+
 	</script>
 
 </head>

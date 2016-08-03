@@ -10,7 +10,7 @@
  * @author     Christos Pontikis http://pontikis.net
  * @copyright  Christos Pontikis
  * @license    MIT http://opensource.org/licenses/MIT
- * @version    0.8.3 (19 Apr 2014)
+ * @version    0.8.4 (20 Apr 2014)
  */
 class donoussa {
 
@@ -24,7 +24,7 @@ class donoussa {
 	public function __construct(data_source $ds, $dependencies, $config) {
 
 		// initialize ----------------------------------------------------------
-		$this->version = '0.8.3';
+		$this->version = '0.8.4';
 		$this->ds = $ds;
 		$this->dependencies = $dependencies;
 
@@ -85,6 +85,8 @@ class donoussa {
 		$this->view_filename = null;
 		$this->header = null;
 		$this->footer = null;
+		$this->modal_dialog = null;
+		$this->modal_confirm = null;
 		$this->ajax_request = null;
 		$this->redirect = null;
 		$this->last_error = null;
@@ -214,6 +216,8 @@ class donoussa {
 			$this->real_url = $page_properties['real_url'];
 			$this->model_filename = $page_properties['model_filename'] ? $page_properties['model_filename'] : $config['model_filename'];
 			$this->view_filename = $page_properties['view_filename'] ? $page_properties['view_filename'] : $config['view_filename'];
+			$this->modal_dialog = $page_properties['modal_dialog'];
+			$this->modal_confirm = $page_properties['modal_confirm'];
 		}
 
 		if($this->request_type == "regular") {
@@ -350,11 +354,6 @@ class donoussa {
 				return false;
 			}
 
-			// AJAX CSRF PROTECTION
-			if(session_id() != '') {
-				$_SESSION['X-CSRF-Token'] = md5(uniqid(mt_rand(), true));
-			}
-
 			// LOG LINE
 			if($config['keep_log']) {
 				$this->log = 'REGULAR REQUEST: ' . $action_url;
@@ -392,7 +391,7 @@ class donoussa {
 
 			// CSRF protection
 			if(session_id() != '') {
-				if($_SESSION['X-CSRF-Token'] !== $_SERVER['HTTP_X_CSRF_TOKEN']) {
+				if(sha1(session_id() . $this->page_id) !== $_SERVER['HTTP_X_CSRF_TOKEN']) {
 					$this->last_error_code = 'csrf_token_not_match';
 					$this->last_error = __METHOD__ . ' ' . "{$config['messages'][$this->last_error_code]} ($action_url)";
 					return false;
