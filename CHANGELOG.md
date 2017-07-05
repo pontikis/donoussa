@@ -10,7 +10,7 @@ Copyright Christos Pontikis http://www.pontikis.net
 License [MIT](https://raw.github.com/pontikis/donoussa/master/MIT_LICENSE)
 
 
-Release 0.9.9 (XX Jul 2017)
+Release 0.9.0 (XX Jul 2017)
 ---------------------------
 
 

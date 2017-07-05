@@ -2,17 +2,17 @@
 <html lang="<?php print C_HTML_LANG ?>">
 <head>
 	<meta charset="utf-8">
-	<title><?php print gettext($app->page_title) ?></title>
+	<title><?php print gettext($app->getPageTitle()) ?></title>
 	<meta name="description"
-		  content="<?php print gettext($app->page_description) ?>">
+		  content="<?php print gettext($app->getPageDescription()) ?>">
 	<meta name="viewport"
 		  content="width=device-width, initial-scale=1.0">
 
-	<?php print $app->page_depedencies_html ?>
+	<?php print $app->getPageDependenciesHtml() ?>
 
 	<script type="text/javascript">
 		$.ajaxSetup({
-			url: "<?php print C_PROJECT_URL . $app->real_url . '/' ?>",
+			url: "<?php print C_PROJECT_URL . $app->getRealUrl() . '/' ?>",
 			error: function(jqXHR, exception) {
 				if(jqXHR.responseText) {
 					alert(jqXHR.responseText.replace(/<.*?>/g, ''));
@@ -37,7 +37,7 @@
 
 		<?php if(session_id() != '') { ?>
 		$(document).ajaxSend(function(e, xhr, options) {
-			xhr.setRequestHeader("X-CSRF-Token", "<?php print sha1(session_id() . $app->page_id) ?>");
+			xhr.setRequestHeader("X-CSRF-Token", "<?php print sha1(session_id() . $app->getPageId()) ?>");
 		});
 		<?php } ?>
 

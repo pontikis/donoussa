@@ -18,8 +18,8 @@ At a glance
 * add donoussa tables in database (page_properties, page_dependencies, page_url), see schema_mysql.sql
 * start coding
 
-MVC
----
+MVC comparison
+--------------
 
 Compare     | Advanced MVC Frameworks | Donoussa
 ----------- | ----------------------- | -------------
@@ -43,4 +43,5 @@ Compare     | Advanced MVC Frameworks | Donoussa
 
 Documentation
 -------------
-Coming soon
+
+See ``docs/doxygen/html`` for html documentation. 
