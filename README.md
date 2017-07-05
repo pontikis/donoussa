@@ -21,8 +21,8 @@ At a glance
 MVC
 ---
 
- | Advanced MVC Frameworks | Donoussa
-------- | ------------ | -------------
+Compare | Advanced MVC Frameworks | Donoussa
+------- | ----------------------- | --------
 Front controller | YES Index.php is the single point of entry for all requests (using mod_rewrite) | YES Index.php or any other (using mod_rewrite)
 Number of files | Many | 7
 Friendly URLs | YES | YES (without restrictions)
