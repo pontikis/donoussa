@@ -10,9 +10,10 @@ Copyright Christos Pontikis http://www.pontikis.net
 License [MIT](https://raw.github.com/pontikis/donoussa/master/MIT_LICENSE)
 
 
-Release 0.9.0 (XX Jul 2017)
+Release 0.9.0 (05 Jul 2017)
 ---------------------------
 
+* private vars (getters - setters) - reconstruction - docs #3
 
 Release 0.8.3 (19 Apr 2014)
 ---------------------------

@@ -36,7 +36,7 @@ Compare     | Advanced MVC Frameworks | Donoussa
 **Class Autoloading** | YES | NO 
 **Use a Registry object** | YES | NO 
 **Multilanguage support** | Usually | YES (using gettext and php-intl)
-**Manage assets (CSS, JS)** | Usually | Assets are managed internally. Minify and bundle option available. Force reload using pseudo query string.
+**Manage assets (CSS, JS)** | Usually (using Composer https://getcomposer.org/) | Assets are managed internally. Minify and bundle option available. Force reload using pseudo query string.
 **Prevent direct URL download** | ? |YES
 **Integrated unit testing support** | Usually | NO
 

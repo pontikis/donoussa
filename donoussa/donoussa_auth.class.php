@@ -14,7 +14,7 @@
  * @author     Christos Pontikis http://pontikis.net
  * @copyright  Christos Pontikis
  * @license    MIT http://opensource.org/licenses/MIT
- * @version    0.1.1 (XX Jul 2017)
+ * @version    0.1.1 (05 Jul 2017)
  *
  */
 class auth {

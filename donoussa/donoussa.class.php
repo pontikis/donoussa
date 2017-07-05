@@ -14,7 +14,7 @@
  * @author     Christos Pontikis http://pontikis.net
  * @copyright  Christos Pontikis
  * @license    MIT http://opensource.org/licenses/MIT
- * @version    0.9.0 (xx Jul 2017)
+ * @version    0.9.0 (05 Jul 2017)
  */
 class donoussa {
 
