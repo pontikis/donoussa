@@ -26,6 +26,19 @@ Compare | Advanced MVC Frameworks | Donoussa
 **Front controller** | YES Index.php is the single point of entry for all requests (using mod_rewrite) | YES Index.php or any other (using mod_rewrite)
 **Number of files** | Many | 7
 **Friendly URLs** | YES | YES (without restrictions)
+**URL structure** | according standard MVC patterns, e.g. http://domain/controller/action/id | Any URL structure e.g. http://domain/any_url
+**Code Directory structure** | Usually /models /views /controllers /config | Any directory structure (recommended /conf)
+**Controllers** | Front controller will establish a "loader" object to “translate” the requested URL into an instance of the relevant controller class. Controllers, models and views are individual files organized in relevant folders of the same name. | Front controller will include the appropriate “model” and “view” using Dynamic Lookup Invocation from database (or memcached, json, xml etc)
+**Views** | Views can be either stand-alone or use a template | Views are HTML files with embedded PHP
+**Database abstraction layer** | YES | YES https://github.com/pontikis/dacapo (MySQLi, PostgreSQL)
+**User/Roles functionality** | YES | YES
+**AJAX CSRF protection** | Usually | YES
+**Class Autoloading** | YES | NO 
+**Use a Registry object** | YES | NO 
+**Multilanguage support** | Usually | YES (using gettext and php-intl)
+**Manage assets (CSS, JS)** | Usually | Assets are managed internally. Minify and bundle option available. Force reload using pseudo query string.
+**Prevent direct URL download** | ? |YES
+**Integrated unit testing support** | Usually | NO
 
 
 Documentation

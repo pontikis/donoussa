@@ -1,0 +1,5 @@
+<map id="check_user_email" name="check_user_email">
+<area shape="rect" id="node2" href="$classauth.html#a2838b614193d9ca89810d02a93d0ec68" title="is_valid_email" alt="" coords="205,5,309,32"/>
+<area shape="rect" id="node3" href="$classauth.html#a34176c8c7b39e3fc048dcaf667ce9244" title="is_valid_email_domain" alt="" coords="180,56,333,83"/>
+<area shape="rect" id="node4" href="$classauth.html#ae5664ec11a163abce00fe33ca322d0f0" title="getDomainFromEmail" alt="" coords="381,56,529,83"/>
+</map>
