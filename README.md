@@ -21,11 +21,11 @@ At a glance
 MVC
 ---
 
-Compare | Advanced MVC Frameworks | Donoussa
+        | Advanced MVC Frameworks | Donoussa
 ------- | ----------------------- | --------
-Front controller | YES Index.php is the single point of entry for all requests (using mod_rewrite) | YES Index.php or any other (using mod_rewrite)
-Number of files | Many | 7
-Friendly URLs | YES | YES (without restrictions)
+**Front controller** | YES Index.php is the single point of entry for all requests (using mod_rewrite) | YES Index.php or any other (using mod_rewrite)
+**Number of files** | Many | 7
+**Friendly URLs** | YES | YES (without restrictions)
 
 
 Documentation
