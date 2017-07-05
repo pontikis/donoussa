@@ -2,18 +2,19 @@
 
 /**
  * Class auth
+ *
  * User authorization (create account, login etc)
  *
  * Required classes:
- * - Class data_source
- * @link https://github.com/pontikis/simple_data_source
+ * - Class dacapo
+ * @link https://github.com/pontikis/dacapo
  * - Class PasswordHash
  * @link http://openwall.com/phpass/
  *
  * @author     Christos Pontikis http://pontikis.net
  * @copyright  Christos Pontikis
  * @license    MIT http://opensource.org/licenses/MIT
- * @version    0.1.0 (10 Mar 2014)
+ * @version    0.1.1 (XX Jul 2017)
  *
  */
 class auth {
@@ -21,10 +22,10 @@ class auth {
 	/**
 	 * Constructor
 	 *
-	 * @param data_source $ds
+	 * @param dacapo $ds
 	 * @param array $options
 	 */
-	public function __construct(data_source $ds = null, $options = array()) {
+	public function __construct(dacapo $ds = null, $options = array()) {
 
 		// initialize ------------------------------------------------------
 		$this->ds = $ds;
@@ -135,12 +136,12 @@ class auth {
 		);
 		$res = $ds->select($sql, $bind_params, $query_options);
 		if(!$res) {
-			$this->last_error = $ds->last_error;
+			$this->last_error = $ds->getLastError();
 			$this->sql_error = true;
 			return false;
 		}
 
-		$rs = $ds->data;
+		$rs = $ds->getData();
 		if($rs['total_rows'] != 0) {
 			$this->last_error = 'email_in_use';
 			return false;
@@ -186,11 +187,11 @@ class auth {
 		);
 		$res = $ds->select($sql, $bind_params, $query_options);
 		if(!$res) {
-			$this->last_error = $ds->last_error;
+			$this->last_error = $ds->getLastError();
 			$this->sql_error = true;
 			return false;
 		}
-		$rs = $ds->data;
+		$rs = $ds->getData();
 		if($rs['total_rows'] != 0) {
 			$this->last_error = 'username_in_use';
 			return false;
@@ -373,13 +374,13 @@ class auth {
 
 		$res = $ds->select($sql, $bind_params);
 		if(!$res) {
-			$this->last_error = $ds->last_error;
+			$this->last_error = $ds->getLastError();
 			$this->sql_error = true;
 			return false;
 		}
 
-		if($ds->num_rows == 1) {
-			$a_user = $ds->data;
+		if($ds->getNumRows() == 1) {
+			$a_user = $ds->getData();
 
 			if($a_user[0][$c_users_status] == $user_active) {
 				// Initialize the hasher without portable hashes (this is more secure)
@@ -414,12 +415,12 @@ class auth {
 							);
 							$res = $ds->select($sql, $bind_params, $query_options);
 							if(!$res) {
-								$this->last_error = $ds->last_error;
+								$this->last_error = $ds->getLastError();
 								$this->sql_error = true;
 								return false;
 							}
 						}
-						$this->demographics = $ds->data;
+						$this->demographics = $ds->getData();
 
 						return true;
 					}
@@ -431,7 +432,7 @@ class auth {
 				$this->last_error = 'account_is_not_active';
 			}
 
-		} else if($ds->num_rows == 0) {
+		} else if($ds->getNumRows() == 0) {
 			if($this->is_valid_email($user)) {
 				$this->last_error = 'user_email_not_found';
 			} else {
@@ -482,14 +483,14 @@ class auth {
 		$bind_params = array(mb_strtolower($email));
 		$res = $ds->select($sql, $bind_params);
 		if(!$res) {
-			$this->last_error = $ds->last_error;
+			$this->last_error = $ds->getLastError();
 			$this->sql_error = true;
 			return false;
 		}
 
 
-		$a_user = $ds->data;
-		$total_rows = $ds->num_rows;
+		$a_user = $ds->getData();
+		$total_rows = $ds->getNumRows();
 
 		if($total_rows == 0) {
 			$this->last_error = 'email_unknown';

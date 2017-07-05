@@ -1,30 +1,69 @@
 <?php
 
 /**
- * Donoussa - micro PHP framework
+ * Class donoussa
  *
  * Donoussa is a minimalistic PHP MVC framework, simple and easy to use.
  * It combines FLAT PHP code writing freedom with basic MVC features.
  * It bears the name of the small Greek island Donoussa.
  *
+ * Required classes:
+ * - Class dacapo
+ * @link https://github.com/pontikis/dacapo
+ *
  * @author     Christos Pontikis http://pontikis.net
  * @copyright  Christos Pontikis
  * @license    MIT http://opensource.org/licenses/MIT
- * @version    0.8.4 (20 Apr 2014)
+ * @version    0.9.0 (xx Jul 2017)
  */
 class donoussa {
+
+	// arguments - no getters available (3)
+	private $ds;
+	private $dependencies;
+	private $config;
+
+	// getters available (22)
+	private $page_id;
+	private $package;
+	private $request_type;
+	private $url_title;
+	private $url_title_param;
+	private $url_description;
+	private $real_url;
+	private $section_urls;
+	private $page_title;
+	private $page_description;
+	private $page_dependencies_html;
+	private $model;
+	private $view;
+	private $header;
+	private $footer;
+	private $modal_dialog;
+	private $modal_confirm;
+	private $ajax_request;
+	private $redirect;
+	private $last_error;
+	private $last_error_code;
+	private $log;
+
+	// other vars - no getters available (5)
+	private $action_url;
+	private $page_properties;
+	private $page_depedencies;
+	private $model_filename;
+	private $view_filename;
 
 	/**
 	 * Constructor
 	 *
-	 * @param data_source $ds
+	 * @param dacapo $ds
 	 * @param array $dependencies
 	 * @param array $config
 	 */
-	public function __construct(data_source $ds, $dependencies, $config) {
+	public function __construct(dacapo $ds, $dependencies, $config) {
 
 		// initialize ----------------------------------------------------------
-		$this->version = '0.8.4';
 		$this->ds = $ds;
 		$this->dependencies = $dependencies;
 
@@ -35,6 +74,9 @@ class donoussa {
 			't_page_url' => 'page_url', // the name of the table which keeps url(s) per page
 			'regular_request' => 1,
 			'ajax_request' => 2,
+			'bundled_css' => false,
+			'bundled_js' => false,
+			'bundle_permissions' => false,
 			'model_filename' => 'index.php',
 			'view_filename' => 'index.view.php',
 			'app_locale' => 'en_US',
@@ -50,6 +92,7 @@ class donoussa {
 			'page_id_maintenance' => 'maintenance',
 			'maintenance_mode' => false,
 			'keep_log' => false,
+			'assets_query_string' => '',
 			'messages' => array(
 				'error_retrieving_section_urls' => 'Error retrieving section URLs',
 				'error_retrieving_url_properties' => 'Error retrieving URL properties',
@@ -71,14 +114,18 @@ class donoussa {
 
 		$this->action_url = null;
 		$this->page_id = null;
+		$this->package = null;
 		$this->request_type = null;
+		$this->url_title = null;
+		$this->url_title_param = null;
+		$this->url_description = null;
 		$this->real_url = null;
 		$this->section_urls = null;
 		$this->page_title = null;
 		$this->page_description = null;
 		$this->page_properties = null;
 		$this->page_depedencies = null;
-		$this->page_depedencies_html = null;
+		$this->page_dependencies_html = null;
 		$this->model = null;
 		$this->view = null;
 		$this->model_filename = null;
@@ -93,6 +140,99 @@ class donoussa {
 		$this->last_error_code = null;
 		$this->log = null;
 	}
+
+
+	// public functions - getters ----------------------------------------------
+	public function getPageId() {
+		return $this->page_id;
+	}
+
+	public function getPackage() {
+		return $this->package;
+	}
+
+	public function getRequestType() {
+		return $this->request_type;
+	}
+
+	public function getUrlTitle() {
+		return $this->url_title;
+	}
+
+	public function getUrlTitleParam() {
+		return $this->url_title_param;
+	}
+
+	public function getUrlDescription() {
+		return $this->url_description;
+	}
+
+	public function getRealUrl() {
+		return $this->real_url;
+	}
+
+	public function getSectionUrls() {
+		return $this->section_urls;
+	}
+
+	public function getPageTitle() {
+		return $this->page_title;
+	}
+
+	public function getPageDescription() {
+		return $this->page_description;
+	}
+
+	public function getPageDependenciesHtml() {
+		return $this->page_dependencies_html;
+	}
+
+	public function getModel() {
+		return $this->model;
+	}
+
+	public function getView() {
+		return $this->view;
+	}
+
+	public function getHeader() {
+		return $this->header;
+	}
+
+	public function getFooter() {
+		return $this->footer;
+	}
+
+	public function getModalDialog() {
+		return $this->modal_dialog;
+	}
+
+	public function getModalConfirm() {
+		return $this->modal_confirm;
+	}
+
+	public function getAjaxRequest() {
+		return $this->ajax_request;
+	}
+
+	public function getRedirect() {
+		return $this->redirect;
+	}
+
+	public function getLastError() {
+		return $this->last_error;
+	}
+
+	public function getLastErrorCode() {
+		return $this->last_error_code;
+	}
+
+	public function getLog() {
+		return $this->log;
+	}
+
+
+	// public functions - main methods -----------------------------------------
 
 	/**
 	 * Donoussa - micro PHP framework
@@ -120,10 +260,10 @@ class donoussa {
 			$res = $ds->select($sql, $bind_params);
 			if(!$res) {
 				$this->last_error_code = 'error_retrieving_section_urls';
-				$this->last_error = __METHOD__ . ' ' . "{$config['messages'][$this->last_error_code]}: $ds->last_error";
+				$this->last_error = __METHOD__ . ' ' . "{$config['messages'][$this->last_error_code]}: $ds->getLastError()";
 				return false;
 			}
-			$rs = $ds->data;
+			$rs = $ds->getData();
 			foreach($rs as $row) {
 				$section_urls[$row['section_id']] = C_PROJECT_URL . $row['url'];
 			}
@@ -157,10 +297,10 @@ class donoussa {
 			$res = $ds->select($sql, $bind_params, $query_options);
 			if(!$res) {
 				$this->last_error_code = 'error_retrieving_url_properties';
-				$this->last_error = __METHOD__ . ' ' . "{$config['messages'][$this->last_error_code]} ($action_url): $ds->last_error";
+				$this->last_error = __METHOD__ . ' ' . "{$config['messages'][$this->last_error_code]} ($action_url): $ds->getLastError()";
 				return false;
 			}
-			$url_properties = $ds->data;
+			$url_properties = $ds->getData();
 
 			if($config['memcached_keys_prefix']) {
 				// do not cash invalid URLs
@@ -176,6 +316,9 @@ class donoussa {
 
 			if($url_properties['request_type'] == $config['regular_request']) {
 				$this->request_type = "regular";
+				$this->url_title = $url_properties['title'];
+				$this->url_title_param = $url_properties['title_param'];
+				$this->url_description = $url_properties['description'];
 			}
 			if($url_properties['request_type'] == $config['ajax_request']) {
 				$this->request_type = "ajax";
@@ -198,10 +341,10 @@ class donoussa {
 			$res = $ds->select($sql, $bind_params, $query_options);
 			if(!$res) {
 				$this->last_error_code = 'error_retrieving_page_properties';
-				$this->last_error = __METHOD__ . ' ' . "{$config['messages'][$this->last_error_code]} ($action_url): $ds->last_error";
+				$this->last_error = __METHOD__ . ' ' . "{$config['messages'][$this->last_error_code]} ($action_url): $ds->getLastError()";
 				return false;
 			}
-			$page_properties = $ds->data;
+			$page_properties = $ds->getData();
 
 			if($config['memcached_keys_prefix']) {
 				$ds->push_to_memcached($mc_key, $page_properties);
@@ -211,6 +354,7 @@ class donoussa {
 		$this->page_properties = $page_properties;
 
 		if($page_properties) {
+			$this->package = $page_properties['package'];
 			$this->page_title = $page_properties['title'];
 			$this->page_description = $page_properties['description'];
 			$this->real_url = $page_properties['real_url'];
@@ -235,10 +379,10 @@ class donoussa {
 				$res = $ds->select($sql, $bind_params, $query_options);
 				if(!$res) {
 					$this->last_error_code = 'error_retrieving_page_dependencies';
-					$this->last_error = __METHOD__ . ' ' . "{$config['messages'][$this->last_error_code]} ($action_url): $ds->last_error";
+					$this->last_error = __METHOD__ . ' ' . "{$config['messages'][$this->last_error_code]} ($action_url): $ds->getLastError()";
 					return false;
 				}
-				$page_dependencies_tmp = $ds->data;
+				$page_dependencies_tmp = $ds->getData();
 
 				// remove null dependencies
 				unset($page_dependencies_tmp['id']);
@@ -265,7 +409,7 @@ class donoussa {
 			$this->page_depedencies = $page_dependencies;
 
 			// CREATE DEPENDENCIES (CSS + JS) HTML
-			$this->page_depedencies_html = $this->create_page_dependencies_html();
+			$this->page_dependencies_html = $this->_create_page_dependencies_html();
 
 		}
 
@@ -323,35 +467,43 @@ class donoussa {
 
 			$model = C_PROJECT_PATH . $this->real_url . '/' . $this->model_filename;
 			$view = C_PROJECT_PATH . $this->real_url . '/' . $this->view_filename;
-			$header = C_PROJECT_PATH . $page_properties['header'];
-			$footer = C_PROJECT_PATH . $page_properties['footer'];
+			$header = $page_properties['header'] ? C_PROJECT_PATH . $page_properties['header'] : null;
+			$footer = $page_properties['footer'] ? C_PROJECT_PATH . $page_properties['footer'] : null;
 
-			if(file_exists($model) && is_file($model)) {
-				$this->model = $model;
+			if($model) {
+				if(file_exists($model) && is_file($model)) {
+					$this->model = $model;
+				}
 			}
 
-			if(file_exists($header) && is_file($header)) {
-				$this->header = $header;
-			} else {
-				$this->last_error_code = 'invalid_header_file';
-				$this->last_error = __METHOD__ . ' ' . "{$config['messages'][$this->last_error_code]} ($header)";
-				return false;
+			if($header) {
+				if(file_exists($header) && is_file($header)) {
+					$this->header = $header;
+				} else {
+					$this->last_error_code = 'invalid_header_file';
+					$this->last_error = __METHOD__ . ' ' . "{$config['messages'][$this->last_error_code]} ($header)";
+					return false;
+				}
 			}
 
-			if(file_exists($view) && is_file($view)) {
-				$this->view = $view;
-			} else {
-				$this->last_error_code = 'invalid_view_file';
-				$this->last_error = __METHOD__ . ' ' . "{$config['messages'][$this->last_error_code]} ($view)";
-				return false;
+			if($view) {
+				if(file_exists($view) && is_file($view)) {
+					$this->view = $view;
+				} else {
+					$this->last_error_code = 'invalid_view_file';
+					$this->last_error = __METHOD__ . ' ' . "{$config['messages'][$this->last_error_code]} ($view)";
+					return false;
+				}
 			}
 
-			if(file_exists($footer) && is_file($footer)) {
-				$this->footer = $footer;
-			} else {
-				$this->last_error_code = 'invalid_footer_file';
-				$this->last_error = __METHOD__ . ' ' . "{$config['messages'][$this->last_error_code]} ($footer)";
-				return false;
+			if($footer) {
+				if(file_exists($footer) && is_file($footer)) {
+					$this->footer = $footer;
+				} else {
+					$this->last_error_code = 'invalid_footer_file';
+					$this->last_error = __METHOD__ . ' ' . "{$config['messages'][$this->last_error_code]} ($footer)";
+					return false;
+				}
 			}
 
 			// LOG LINE
@@ -361,7 +513,7 @@ class donoussa {
 
 		} else if($this->request_type == 'ajax') {
 
-			if(!$this->is_ajax()) {
+			if(!$this->_is_ajax()) {
 				$this->last_error_code = 'direct_access_of_ajax_request';
 				$this->last_error = __METHOD__ . ' ' . "{$config['messages'][$this->last_error_code]} ($action_url)";
 				return false;
@@ -390,13 +542,15 @@ class donoussa {
 			}
 
 			// CSRF protection
-			if(session_id() != '') {
-				if(sha1(session_id() . $this->page_id) !== $_SERVER['HTTP_X_CSRF_TOKEN']) {
-					$this->last_error_code = 'csrf_token_not_match';
-					$this->last_error = __METHOD__ . ' ' . "{$config['messages'][$this->last_error_code]} ($action_url)";
-					return false;
+/*			if(session_id() != '') {
+				if(array_key_exists('HTTP_X_CSRF_TOKEN', $_SERVER)) {
+					if(sha1(session_id() . $this->page_id) !== $_SERVER['HTTP_X_CSRF_TOKEN']) {
+						$this->last_error_code = 'csrf_token_not_match';
+						$this->last_error = __METHOD__ . ' ' . "{$config['messages'][$this->last_error_code]} ($action_url)";
+						return false;
+					}
 				}
-			}
+			}*/
 
 			$this->ajax_request = C_PROJECT_PATH . $action_url;
 
@@ -418,7 +572,7 @@ class donoussa {
 				$this->log = 'UNKNOWN REQUEST: ' . $action_url;
 			}
 
-			if($this->is_ajax()) {
+			if($this->_is_ajax()) {
 				$this->last_error_code = 'invalid_ajax_request';
 				$this->last_error = __METHOD__ . ' ' . "{$config['messages'][$this->last_error_code]} ($action_url)";
 				return false;
@@ -430,87 +584,6 @@ class donoussa {
 		}
 
 		return true;
-	}
-
-
-	/**
-	 * @return string
-	 */
-	private function create_page_dependencies_html() {
-
-		$config = $this->config;
-		$dependencies = $this->dependencies;
-		$page_properties = $this->page_properties;
-		$html = '';
-
-		foreach($this->page_depedencies as $key => $page_dep) {
-
-			$dep = $dependencies[$key];
-			$dep_default = $dep['default'];
-
-			switch($dep['type']) {
-				case 'css':
-					$elem_id = array_key_exists('element_id', $dep) ? 'id="' . $dep['element_id'] . '" ' : '';
-					if($page_dep == 1) {
-						if(array_key_exists('session', $dep) && isset($_SESSION[$dep['session']['variable']])) {
-							$href = $dep['session']['values'][$_SESSION[$dep['session']['variable']]];
-							$href = (filter_var($href, FILTER_VALIDATE_URL) === FALSE) ? C_LIB_FRONT_END_URL . $href : $href;
-						} else {
-							if($key == 'page_css') {
-								$href = C_PROJECT_URL . $page_properties['real_url'] . '/' . $dep_default;
-							} else if($key == 'common_css') {
-								$href = C_PROJECT_URL . $dep_default;
-							} else {
-								$href = (filter_var($dep_default, FILTER_VALIDATE_URL) === FALSE) ? C_LIB_FRONT_END_URL . $dep_default : $dep_default;
-							}
-						}
-					} else {
-						$href = $page_dep;
-					}
-					$html .= '<link ' . $elem_id . 'rel="stylesheet" type="text/css" href="' . $href . '">"' . PHP_EOL;
-					break;
-
-				case 'js':
-					if($page_dep == 1) {
-
-						if(array_key_exists('locale', $dep)) {
-							if(array_key_exists($config['app_locale'], $dep['locale'])) {
-								$src = $dep['locale'][$config['app_locale']];
-							} else {
-								$src = $dep_default ? $dep_default : '';
-							}
-							if($src) {
-								$src = (filter_var($src, FILTER_VALIDATE_URL) === FALSE) ? C_LIB_FRONT_END_URL . $src : $src;
-							}
-						} else {
-							if($key == 'page_js') {
-								$src = C_PROJECT_URL . $page_properties['real_url'] . '/' . $dep_default;
-							} else if($key == 'common_js') {
-								$src = C_PROJECT_URL . $dep_default;
-							} else {
-								$src = (filter_var($dep_default, FILTER_VALIDATE_URL) === FALSE) ? C_LIB_FRONT_END_URL . $dep_default : $dep_default;
-							}
-						}
-					} else {
-						$src = $page_dep;
-					}
-
-					if($src) {
-						if(array_key_exists('condition', $dep)) {
-							$html .= $dep['condition']['start'] . PHP_EOL;
-						}
-						$html .= '<script src="' . $src . '" type="text/javascript"></script>' . PHP_EOL;
-						if(array_key_exists('condition', $dep)) {
-							$html .= $dep['condition']['end'] . PHP_EOL;
-						}
-					}
-					break;
-			}
-
-		}
-
-		return $html;
-
 	}
 
 
@@ -530,10 +603,10 @@ class donoussa {
 		$res = $ds->select($sql, $bind_params);
 		if(!$res) {
 			$this->last_error_code = 'error_retrieving_section_urls';
-			$this->last_error = __METHOD__ . ' ' . "{$config['messages'][$this->last_error_code]}: $ds->last_error";
+			$this->last_error = __METHOD__ . ' ' . "{$config['messages'][$this->last_error_code]}: $ds->getLastError()";
 			return false;
 		}
-		$rs = $ds->data;
+		$rs = $ds->getData();
 		foreach($rs as $row) {
 			$urls[] = $row['url'];
 		}
@@ -545,10 +618,10 @@ class donoussa {
 		$res = $ds->select($sql, $bind_params);
 		if(!$res) {
 			$this->last_error_code = 'error_retrieving_page_ids';
-			$this->last_error = __METHOD__ . ' ' . "{$config['messages'][$this->last_error_code]}: $ds->last_error";
+			$this->last_error = __METHOD__ . ' ' . "{$config['messages'][$this->last_error_code]}: $ds->getLastError()";
 			return false;
 		}
-		$rs = $ds->data;
+		$rs = $ds->getData();
 		foreach($rs as $row) {
 			$page_ids[] = $row['page_id'];
 		}
@@ -579,10 +652,197 @@ class donoussa {
 
 	}
 
+	// private functions -------------------------------------------------------
+
+	/**
+	 * @return string
+	 */
+	private function _create_page_dependencies_html() {
+
+		$config = $this->config;
+		$dependencies = $this->dependencies;
+		$page_properties = $this->page_properties;
+		$html = '';
+
+		$now = now_on_server();
+
+		$bundled_css_basename = $this->page_id . '_' . $config['app_locale'] . '.css';
+		$bundled_css_filename = C_PROJECT_PATH . $config['bundled_css'] . $bundled_css_basename;
+		$bundled_css_exists = file_exists($bundled_css_filename);
+		$bundled_css_contents = '/*' . PHP_EOL . "BUNDLED AT $now " . str_repeat("#", 54) . PHP_EOL . '*/';
+
+		$bundled_js_basename = $this->page_id . '_' . $config['app_locale'] . '.js';
+		$bundled_js_filename = C_PROJECT_PATH . $config['bundled_js'] . $bundled_js_basename;
+		$bundled_js_exists = file_exists($bundled_js_filename);
+		$bundled_js_contents = '/*' . PHP_EOL . "BUNDLED AT $now " . str_repeat("#", 54) . PHP_EOL . '*/';
+
+		foreach($this->page_depedencies as $key => $page_dep) {
+
+			$dep = $dependencies[$key];
+			$dep_default = $dep['default'];
+
+			switch($dep['type']) {
+				case 'css':
+					$exclude_css_from_bundle = !$config['bundled_css'] || array_key_exists('exclude_from_bundle', $dep) && $dep['exclude_from_bundle'];
+
+					$elem_id = array_key_exists('element_id', $dep) ? 'id="' . $dep['element_id'] . '" ' : '';
+					if($page_dep == 1) {
+						if(array_key_exists('session', $dep) && isset($_SESSION[$dep['session']['variable']])) {
+							$href = $dep['session']['values'][$_SESSION[$dep['session']['variable']]];
+							$href = (filter_var($href, FILTER_VALIDATE_URL) === FALSE) ? C_LIB_FRONT_END_URL . $href : $href;
+						} else {
+							if($key == 'page_css') {
+								$href = C_PROJECT_URL . $page_properties['real_url'] . '/' . $dep_default . $config['assets_query_string'];
+							} else if($key == 'common_css') {
+								$href = C_PROJECT_URL . $dep_default . $config['assets_query_string'];
+							} else {
+								$href = (filter_var($dep_default, FILTER_VALIDATE_URL) === FALSE) ? C_LIB_FRONT_END_URL . $dep_default : $dep_default;
+							}
+						}
+					} else {
+						$href = $page_dep;
+					}
+					if($exclude_css_from_bundle) {
+						$html .= '<link ' . $elem_id . 'rel="stylesheet" type="text/css" href="' . $href . '">' . PHP_EOL;
+					} else {
+						if(!$bundled_css_exists) {
+							$dep_filename = C_PROJECT_PATH . $config['bundled_css'] . $page_dep;
+							$log_name = $page_dep;
+							if($page_dep == 1) {
+								if($key == 'page_css') {
+									$dep_filename = C_PROJECT_PATH . $page_properties['real_url'] . '/' . $dep_default;
+									$log_name = $page_properties['real_url'] . '/' . $dep_default;
+								} else if($key == 'common_css') {
+									$dep_filename = C_PROJECT_PATH . $dep_default;
+									$log_name = $dep_default;
+								} else {
+									$dep_filename = C_PROJECT_PATH . C_LIB_FRONT_END_BASE_URL . $dep_default;
+									$log_name = $dep_default;
+								}
+							}
+							$bundled_css_contents .= PHP_EOL . PHP_EOL . '/* ' . $log_name . ' ' . str_repeat("#", max(0, 73 - strlen($log_name))) . ' */' . PHP_EOL;
+							if(array_key_exists('minify', $dep) && $dep['minify']) {
+								$bundled_css_contents .= CssMin::minify(file_get_contents($dep_filename));
+							} else {
+								$bundled_css_contents .= file_get_contents($dep_filename);
+							}
+						}
+					}
+					break;
+
+				case 'js':
+
+					$exclude_js_from_bundle = !$config['bundled_js'] || array_key_exists('exclude_from_bundle', $dep) && $dep['exclude_from_bundle'];
+
+					if($page_dep == 1) {
+
+						if(array_key_exists('locale', $dep)) {
+							if(array_key_exists($config['app_locale'], $dep['locale'])) {
+								$src = $dep['locale'][$config['app_locale']];
+							} else {
+								$src = $dep_default ? $dep_default : '';
+							}
+							if($src) {
+								$src = (filter_var($src, FILTER_VALIDATE_URL) === FALSE) ? C_LIB_FRONT_END_URL . $src : $src;
+							}
+						} else {
+							if($key == 'page_js') {
+								$src = C_PROJECT_URL . $page_properties['real_url'] . '/' . $dep_default . $config['assets_query_string'];
+							} else if($key == 'common_js') {
+								$src = C_PROJECT_URL . $dep_default . $config['assets_query_string'];
+							} else {
+								$src = (filter_var($dep_default, FILTER_VALIDATE_URL) === FALSE) ? C_LIB_FRONT_END_URL . $dep_default : $dep_default;
+							}
+						}
+					} else {
+						$src = $page_dep;
+					}
+					if($exclude_js_from_bundle) {
+						if($src) {
+							if(array_key_exists('condition', $dep)) {
+								$html .= $dep['condition']['start'] . PHP_EOL;
+							}
+							$html .= '<script src="' . $src . '" type="text/javascript"></script>' . PHP_EOL;
+							if(array_key_exists('condition', $dep)) {
+								$html .= $dep['condition']['end'] . PHP_EOL;
+							}
+						}
+					} else {
+						if(!$bundled_js_exists) {
+
+							$dep_filename = C_PROJECT_PATH . $config['bundled_js'] . $page_dep;
+							$log_name = $page_dep;
+							if($page_dep == 1) {
+								if(array_key_exists('locale', $dep)) {
+									if(array_key_exists($config['app_locale'], $dep['locale'])) {
+										$dep_filename = C_PROJECT_PATH . C_LIB_FRONT_END_BASE_URL . $dep['locale'][$config['app_locale']];
+										$log_name = $dep['locale'][$config['app_locale']];
+									} else {
+										$dep_filename = $dep_default ? C_PROJECT_PATH . C_LIB_FRONT_END_BASE_URL . $dep_default : '';
+										$log_name = $dep_default;
+									}
+								} else {
+									if($key == 'page_js') {
+										$dep_filename = C_PROJECT_PATH . $page_properties['real_url'] . '/' . $dep_default;
+										$log_name = $page_properties['real_url'] . '/' . $dep_default;
+									} else if($key == 'common_js') {
+										$dep_filename =  $dep_default;
+										$log_name = $dep_default;
+									} else {
+										$dep_filename = C_PROJECT_PATH . C_LIB_FRONT_END_BASE_URL . $dep_default;
+										$log_name = $dep_default;
+									}
+								}
+							}
+
+							if($dep_filename) {
+								$bundled_js_contents .=  PHP_EOL . PHP_EOL . '/* ' . $log_name . ' ' . str_repeat("#", max(0, 73 - strlen($log_name))) . ' */' . PHP_EOL;
+								if(array_key_exists('minify', $dep) && $dep['minify']) {
+									$bundled_js_contents .= \JShrink\Minifier::minify(file_get_contents($dep_filename));
+								} else {
+									$bundled_js_contents .= file_get_contents($dep_filename);
+								}
+							}
+
+						}
+					}
+
+					break;
+			}
+
+		}
+
+
+		if($config['bundled_css']) {
+			if(!$bundled_css_exists) {
+				file_put_contents($bundled_css_filename, $bundled_css_contents);
+				if($config['bundle_permissions']) {
+					chmod($bundled_css_filename, $config['bundle_permissions']);
+				}
+
+			}
+			$html .= '<link rel="stylesheet" type="text/css" href="' . C_PROJECT_URL . $config['bundled_css'] . $bundled_css_basename . $config['assets_query_string'] . '">' . PHP_EOL;
+		}
+
+		if($config['bundled_js']) {
+			if(!$bundled_js_exists) {
+				file_put_contents($bundled_js_filename, $bundled_js_contents);
+				if($config['bundle_permissions']) {
+					chmod($bundled_js_filename, $config['bundle_permissions']);
+				}
+			}
+			$html .= '<script src="' . C_PROJECT_URL . $config['bundled_js'] . $bundled_js_basename . $config['assets_query_string'] . '" type="text/javascript"></script>' . PHP_EOL;
+		}
+
+		return $html;
+
+	}
+
+
 	/**
 	 * @return bool
 	 */
-	private function is_ajax() {
+	private function _is_ajax() {
 		return isset($_SERVER['HTTP_X_REQUESTED_WITH']) AND
 		strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) === 'xmlhttprequest';
 	}

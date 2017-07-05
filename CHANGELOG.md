@@ -1,17 +1,17 @@
-Donoussa
+CHANGELOG
 ========
 
-Donoussa is a minimalistic PHP MVC framework, simple and easy to use. It combines FLAT PHP code writing freedom with basic MVC features. It bears the name of the small Greek island Donoussa.
+Donoussa is a minimalistic PHP MVC framework, simple and easy to use. It combines FLAT PHP code writing freedom with basic MVC features. It bears the name of the small Greek island [Donoussa](http://en.wikipedia.org/wiki/Donoussa)
 
-Copyright [Christos Pontikis][copyright]
-[copyright]: http://www.pontikis.net
+It could be useful in small/medium-size projects. PHP 5.3.0 or newer is recommended. Tested with PHP 7
 
-License [MIT][mit]
-[mit]: https://raw.github.com/pontikis/donoussa/master/MIT_LICENSE
+Copyright Christos Pontikis http://www.pontikis.net
+
+License [MIT](https://raw.github.com/pontikis/donoussa/master/MIT_LICENSE)
 
 
-Release 0.8.4 ????
-------------------
+Release 0.9.9 (XX Jul 2017)
+---------------------------
 
 
 Release 0.8.3 (19 Apr 2014)
