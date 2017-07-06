@@ -14,7 +14,7 @@
  * @author     Christos Pontikis http://pontikis.net
  * @copyright  Christos Pontikis
  * @license    MIT http://opensource.org/licenses/MIT
- * @version    0.9.0 (05 Jul 2017)
+ * @version    0.9.1 (XX Jul 2017)
  */
 class donoussa {
 
@@ -23,7 +23,7 @@ class donoussa {
 	private $dependencies;
 	private $config;
 
-	// getters available (22)
+	// getters available (23)
 	private $page_id;
 	private $package;
 	private $request_type;
@@ -32,6 +32,7 @@ class donoussa {
 	private $url_description;
 	private $real_url;
 	private $section_urls;
+	private $is_alias_of;
 	private $page_title;
 	private $page_description;
 	private $page_dependencies_html;
@@ -47,9 +48,10 @@ class donoussa {
 	private $last_error_code;
 	private $log;
 
-	// other vars - no getters available (5)
+	// other vars - no getters available (6)
 	private $action_url;
 	private $page_properties;
+	private $alias_of_ajax_url;
 	private $page_depedencies;
 	private $model_filename;
 	private $view_filename;
@@ -124,6 +126,8 @@ class donoussa {
 		$this->page_title = null;
 		$this->page_description = null;
 		$this->page_properties = null;
+		$this->is_alias_of = null;
+		$this->alias_of_ajax_url = null;
 		$this->page_depedencies = null;
 		$this->page_dependencies_html = null;
 		$this->model = null;
@@ -181,6 +185,10 @@ class donoussa {
 
 	public function getPageDescription() {
 		return $this->page_description;
+	}
+
+	public function getIsAliasOf() {
+		return $this->is_alias_of;
 	}
 
 	public function getPageDependenciesHtml() {
@@ -362,6 +370,7 @@ class donoussa {
 			$this->view_filename = $page_properties['view_filename'] ? $page_properties['view_filename'] : $config['view_filename'];
 			$this->modal_dialog = $page_properties['modal_dialog'];
 			$this->modal_confirm = $page_properties['modal_confirm'];
+			$this->is_alias_of = $page_properties['is_alias_of'];
 		}
 
 		if($this->request_type == "regular") {
@@ -508,7 +517,12 @@ class donoussa {
 
 			// LOG LINE
 			if($config['keep_log']) {
-				$this->log = 'REGULAR REQUEST: ' . $action_url;
+				if($this->is_alias_of) {
+					$this->log = 'REGULAR REQUEST (alias of ' . $this->is_alias_of . '): ' . $action_url;
+				} else {
+					$this->log = 'REGULAR REQUEST: ' . $action_url;
+				}
+
 			}
 
 		} else if($this->request_type == 'ajax') {
@@ -542,17 +556,25 @@ class donoussa {
 			}
 
 			// CSRF protection
-/*			if(session_id() != '') {
-				if(array_key_exists('HTTP_X_CSRF_TOKEN', $_SERVER)) {
-					if(sha1(session_id() . $this->page_id) !== $_SERVER['HTTP_X_CSRF_TOKEN']) {
-						$this->last_error_code = 'csrf_token_not_match';
-						$this->last_error = __METHOD__ . ' ' . "{$config['messages'][$this->last_error_code]} ($action_url)";
-						return false;
-					}
-				}
-			}*/
+			/*			if(session_id() != '') {
+							if(array_key_exists('HTTP_X_CSRF_TOKEN', $_SERVER)) {
+								if(sha1(session_id() . $this->page_id) !== $_SERVER['HTTP_X_CSRF_TOKEN']) {
+									$this->last_error_code = 'csrf_token_not_match';
+									$this->last_error = __METHOD__ . ' ' . "{$config['messages'][$this->last_error_code]} ($action_url)";
+									return false;
+								}
+							}
+						}*/
 
-			$this->ajax_request = C_PROJECT_PATH . $action_url;
+			if($this->is_alias_of) {
+				$a_url = explode('/', $action_url);
+				// remove first element (the page_id of alias, which put to make unique the alias url)
+				array_splice($a_url, 0,2);
+				$this->alias_of_ajax_url = '/' . implode('/', $a_url);
+				$this->ajax_request = C_PROJECT_PATH . $this->alias_of_ajax_url;
+			} else {
+				$this->ajax_request = C_PROJECT_PATH . $action_url;
+			}
 
 			if(!file_exists($this->ajax_request) || !is_file($this->ajax_request)) {
 				$this->last_error_code = 'invalid_ajax_request';
@@ -562,7 +584,11 @@ class donoussa {
 
 			// LOG LINE
 			if($config['keep_log']) {
-				$this->log = 'AJAX REQUEST: ' . $action_url;
+				if($this->is_alias_of) {
+					$this->log = 'AJAX REQUEST: ' . $action_url . ' (alias of ' . $this->alias_of_ajax_url . ')';
+				} else {
+					$this->log = 'AJAX REQUEST: ' . $action_url;
+				}
 			}
 
 		} else {
@@ -786,7 +812,7 @@ class donoussa {
 										$dep_filename = C_PROJECT_PATH . $page_properties['real_url'] . '/' . $dep_default;
 										$log_name = $page_properties['real_url'] . '/' . $dep_default;
 									} else if($key == 'common_js') {
-										$dep_filename =  $dep_default;
+										$dep_filename = $dep_default;
 										$log_name = $dep_default;
 									} else {
 										$dep_filename = C_PROJECT_PATH . C_LIB_FRONT_END_BASE_URL . $dep_default;
@@ -796,7 +822,7 @@ class donoussa {
 							}
 
 							if($dep_filename) {
-								$bundled_js_contents .=  PHP_EOL . PHP_EOL . '/* ' . $log_name . ' ' . str_repeat("#", max(0, 73 - strlen($log_name))) . ' */' . PHP_EOL;
+								$bundled_js_contents .= PHP_EOL . PHP_EOL . '/* ' . $log_name . ' ' . str_repeat("#", max(0, 73 - strlen($log_name))) . ' */' . PHP_EOL;
 								if(array_key_exists('minify', $dep) && $dep['minify']) {
 									$bundled_js_contents .= \JShrink\Minifier::minify(file_get_contents($dep_filename));
 								} else {
@@ -844,7 +870,7 @@ class donoussa {
 	 */
 	private function _is_ajax() {
 		return isset($_SERVER['HTTP_X_REQUESTED_WITH']) AND
-		strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) === 'xmlhttprequest';
+			strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) === 'xmlhttprequest';
 	}
 
 }

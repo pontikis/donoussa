@@ -2,11 +2,13 @@ var searchData=
 [
   ['_24action_5furl',['$action_url',['../classdonoussa.html#a22b67a5ff5047b9ca0d74c1f975fcb91',1,'donoussa']]],
   ['_24ajax_5frequest',['$ajax_request',['../classdonoussa.html#a4319e8324762d8c8b76560b57eb20dc0',1,'donoussa']]],
+  ['_24alias_5fof_5fajax_5furl',['$alias_of_ajax_url',['../classdonoussa.html#a9469e662bbf31d872980c6f428c629f0',1,'donoussa']]],
   ['_24config',['$config',['../classdonoussa.html#a49c7011be9c979d9174c52a8b83e5d8e',1,'donoussa']]],
   ['_24dependencies',['$dependencies',['../classdonoussa.html#a8ae55c530fb7224b32ec94f1e5906800',1,'donoussa']]],
   ['_24ds',['$ds',['../classdonoussa.html#a1812a4caf64434b22b146b17c25560f2',1,'donoussa']]],
   ['_24footer',['$footer',['../classdonoussa.html#abaa4216c852c51c380dd8f10d3cfe944',1,'donoussa']]],
   ['_24header',['$header',['../classdonoussa.html#a4f44601f2b9dc8a1644bce53c94ce622',1,'donoussa']]],
+  ['_24is_5falias_5fof',['$is_alias_of',['../classdonoussa.html#a0aafbe045d37d51b521d12e088f3765e',1,'donoussa']]],
   ['_24last_5ferror',['$last_error',['../classdonoussa.html#a60375900d6ade93e662c348772867d64',1,'donoussa']]],
   ['_24last_5ferror_5fcode',['$last_error_code',['../classdonoussa.html#aea7dee05fc03fdefde4ae4147baa2328',1,'donoussa']]],
   ['_24log',['$log',['../classdonoussa.html#a9a2cf15a653aee8be437f7ae474cd494',1,'donoussa']]],

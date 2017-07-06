@@ -7,16 +7,15 @@ It could be useful in small/medium-size projects. PHP 5.3.0 or newer is recommen
 
 Copyright Christos Pontikis http://www.pontikis.net
 
-License [MIT](https://raw.github.com/pontikis/donoussa/master/MIT_LICENSE)
+License [MIT](https://github.com/pontikis/donoussa/blob/master/MIT_LICENSE)
 
 At a glance
 -------------
-* copy index.dist.php to /index.php (front controller)
-* copy .htaccess.dist to /.htaccess (mod_rewrite required)
-* copy settings.dist.php to conf/settings.php and configure
-* copy init.dist.php to conf/init.php (configure if needed)
-* add donoussa tables in database (page_properties, page_dependencies, page_url), see schema_mysql.sql
-* start coding
+* copy ``index.dist.php`` to ``/index.php`` (**front controller**)
+* copy .htaccess.dist to /.htaccess (Apache ``mod_rewrite`` required)
+* copy ``settings.dist.php`` to ``conf/settings.php`` and configure
+* copy ``init.dist.php`` to ``conf/init.php`` and configure it
+* add donoussa tables in database (page_properties, page_dependencies, page_url), see ``sql`` folder
 
 MVC comparison
 --------------
@@ -25,7 +24,7 @@ Compare     | Advanced MVC Frameworks | Donoussa
 ----------- | ----------------------- | -------------
 **Front controller** | YES Index.php is the single point of entry for all requests (using mod_rewrite) | YES Index.php or any other (using mod_rewrite)
 **Number of files** | Many | 7
-**Friendly URLs** | YES | YES (without restrictions)
+**Friendly URLs** | YES | YES
 **URL structure** | according standard MVC patterns, e.g. http://domain/controller/action/id | Any URL structure e.g. http://domain/any_url
 **Code Directory structure** | Usually /models /views /controllers /config | Any directory structure (recommended /conf)
 **Controllers** | Front controller will establish a "loader" object to “translate” the requested URL into an instance of the relevant controller class. Controllers, models and views are individual files organized in relevant folders of the same name. | Front controller will include the appropriate “model” and “view” using Dynamic Lookup Invocation from database (or memcached, json, xml etc)

@@ -123,6 +123,8 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:a72e71f0cd569e7975f7e6625c972f37a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a438fccc8d1e80291423afb22717d2cf2"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classdonoussa.html#a438fccc8d1e80291423afb22717d2cf2">getPageDescription</a> ()</td></tr>
 <tr class="separator:a438fccc8d1e80291423afb22717d2cf2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a449c697ca59f853e994fafa4a0105937"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classdonoussa.html#a449c697ca59f853e994fafa4a0105937">getIsAliasOf</a> ()</td></tr>
+<tr class="separator:a449c697ca59f853e994fafa4a0105937"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a7dc25c3913aed7df555b9f64d0b5e95a"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classdonoussa.html#a7dc25c3913aed7df555b9f64d0b5e95a">getPageDependenciesHtml</a> ()</td></tr>
 <tr class="separator:a7dc25c3913aed7df555b9f64d0b5e95a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a0a086ca877b41192556a2de7e4a97b98"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classdonoussa.html#a0a086ca877b41192556a2de7e4a97b98">getModel</a> ()</td></tr>
@@ -183,6 +185,8 @@ Private Attributes</h2></td></tr>
 <tr class="separator:a20555dfe3331d7fa70e3e7c23b45022b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae86e47ad221fbc6fd292d0f28dc06cdc"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classdonoussa.html#ae86e47ad221fbc6fd292d0f28dc06cdc">$section_urls</a></td></tr>
 <tr class="separator:ae86e47ad221fbc6fd292d0f28dc06cdc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0aafbe045d37d51b521d12e088f3765e"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classdonoussa.html#a0aafbe045d37d51b521d12e088f3765e">$is_alias_of</a></td></tr>
+<tr class="separator:a0aafbe045d37d51b521d12e088f3765e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ace7d5ca2414fbd4f411985155fe2f643"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classdonoussa.html#ace7d5ca2414fbd4f411985155fe2f643">$page_title</a></td></tr>
 <tr class="separator:ace7d5ca2414fbd4f411985155fe2f643"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a7e4065a62564456e48a974adc6e6909e"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classdonoussa.html#a7e4065a62564456e48a974adc6e6909e">$page_description</a></td></tr>
@@ -215,6 +219,8 @@ Private Attributes</h2></td></tr>
 <tr class="separator:a22b67a5ff5047b9ca0d74c1f975fcb91"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a3a93462f7e0d2e9f9f8bcac67c659272"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classdonoussa.html#a3a93462f7e0d2e9f9f8bcac67c659272">$page_properties</a></td></tr>
 <tr class="separator:a3a93462f7e0d2e9f9f8bcac67c659272"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9469e662bbf31d872980c6f428c629f0"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classdonoussa.html#a9469e662bbf31d872980c6f428c629f0">$alias_of_ajax_url</a></td></tr>
+<tr class="separator:a9469e662bbf31d872980c6f428c629f0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a46ed360ff1f7337cfb4955891d4c169b"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classdonoussa.html#a46ed360ff1f7337cfb4955891d4c169b">$page_depedencies</a></td></tr>
 <tr class="separator:a46ed360ff1f7337cfb4955891d4c169b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aafa80ec2cc8f16a8456ddf12fc08eb7a"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classdonoussa.html#aafa80ec2cc8f16a8456ddf12fc08eb7a">$model_filename</a></td></tr>
@@ -226,7 +232,7 @@ Private Attributes</h2></td></tr>
 <div class="textblock"><p>Class donoussa</p>
 <p>Donoussa is a minimalistic PHP MVC framework, simple and easy to use. It combines FLAT PHP code writing freedom with basic MVC features. It bears the name of the small Greek island Donoussa.</p>
 <p>Required classes:</p><ul>
-<li>Class dacapo <a class="el" href="">Christos Pontikis <a href="http://pontikis.net">http://pontikis.net</a>  Christos Pontikis  MIT <a href="http://opensource.org/licenses/MIT">http://opensource.org/licenses/MIT</a>  0.9.0 (05 Jul 2017) </a></li>
+<li>Class dacapo <a class="el" href="">Christos Pontikis <a href="http://pontikis.net">http://pontikis.net</a>  Christos Pontikis  MIT <a href="http://opensource.org/licenses/MIT">http://opensource.org/licenses/MIT</a>  0.9.1 (XX Jul 2017) </a></li>
 </ul>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a class="anchor" id="a625013c86d3ac67723a9490dfdd25f43"></a>
@@ -405,6 +411,21 @@ Here is the call graph for this function:</div>
       <table class="memname">
         <tr>
           <td class="memname">getHeader </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="a449c697ca59f853e994fafa4a0105937"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">getIsAliasOf </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td></td>
@@ -740,6 +761,26 @@ Here is the call graph for this function:</div>
 
 </div>
 </div>
+<a class="anchor" id="a9469e662bbf31d872980c6f428c629f0"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">$alias_of_ajax_url</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
 <a class="anchor" id="a49c7011be9c979d9174c52a8b83e5d8e"></a>
 <div class="memitem">
 <div class="memproto">
@@ -829,6 +870,26 @@ Here is the call graph for this function:</div>
       <table class="memname">
         <tr>
           <td class="memname">$header</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="a0aafbe045d37d51b521d12e088f3765e"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">$is_alias_of</td>
         </tr>
       </table>
   </td>

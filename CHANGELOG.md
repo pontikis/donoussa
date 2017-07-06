@@ -7,7 +7,13 @@ It could be useful in small/medium-size projects. PHP 5.3.0 or newer is recommen
 
 Copyright Christos Pontikis http://www.pontikis.net
 
-License [MIT](https://raw.github.com/pontikis/donoussa/master/MIT_LICENSE)
+License [MIT](https://github.com/pontikis/donoussa/blob/master/MIT_LICENSE)
+
+
+Upcoming Release 0.9.1 (XX Jul 2017)
+---------------------------
+
+* action as alias of another action #5
 
 
 Release 0.9.0 (05 Jul 2017)

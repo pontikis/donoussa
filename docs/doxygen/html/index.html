@@ -90,15 +90,14 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="textblock"><p>Donoussa is a minimalistic PHP MVC framework, simple and easy to use. It combines FLAT PHP code writing freedom with basic MVC features. It bears the name of the small Greek island <a href="http://en.wikipedia.org/wiki/Donoussa">Donoussa</a></p>
 <p>It could be useful in small/medium-size projects. PHP 5.3.0 or newer is recommended. Tested with PHP 7</p>
 <p>Copyright Christos Pontikis <a href="http://www.pontikis.net">http://www.pontikis.net</a></p>
-<p>License <a href="https://raw.github.com/pontikis/donoussa/master/MIT_LICENSE">MIT</a></p>
+<p>License <a href="https://github.com/pontikis/donoussa/blob/master/MIT_LICENSE">MIT</a></p>
 <h2>At a glance </h2>
 <ul>
-<li>copy index.dist.php to /index.php (front controller)</li>
-<li>copy .htaccess.dist to /.htaccess (mod_rewrite required)</li>
-<li>copy settings.dist.php to conf/settings.php and configure</li>
-<li>copy init.dist.php to conf/init.php (configure if needed)</li>
-<li>add donoussa tables in database (page_properties, page_dependencies, page_url), see schema_mysql.sql</li>
-<li>start coding</li>
+<li>copy <code>index.dist.php</code> to <code>/index.php</code> (<b>front controller</b>)</li>
+<li>copy .htaccess.dist to /.htaccess (Apache <code>mod_rewrite</code> required)</li>
+<li>copy <code>settings.dist.php</code> to <code>conf/settings.php</code> and configure</li>
+<li>copy <code>init.dist.php</code> to <code>conf/init.php</code> and configure it</li>
+<li>add donoussa tables in database (page_properties, page_dependencies, page_url), see <code>sql</code> folder</li>
 </ul>
 <h2>MVC comparison </h2>
 <table class="doxtable">
@@ -109,7 +108,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <tr>
 <td>**Number of files** </td><td>Many </td><td>7 </td></tr>
 <tr>
-<td>**Friendly URLs** </td><td>YES </td><td>YES (without restrictions) </td></tr>
+<td>**Friendly URLs** </td><td>YES </td><td>YES </td></tr>
 <tr>
 <td>**URL structure** </td><td>according standard MVC patterns, e.g. <a href="http://domain/controller/action/id">http://domain/controller/action/id</a> </td><td>Any URL structure e.g. <a href="http://domain/any_url">http://domain/any_url</a> </td></tr>
 <tr>
@@ -141,7 +140,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <ul>
 <li>Dacapo (Simple PHP database wrapper) <a href="https://github.com/pontikis/dacapo">https://github.com/pontikis/dacapo</a></li>
 <li>Javascript Minifier built in PHP v1.1.0 <a href="https://github.com/tedivm/JShrink">https://github.com/tedivm/JShrink</a> (optional)</li>
-<li>CssMin minfier <a href="http://code.google.com/p/cssmin/">http://code.google.com/p/cssmin/</a> (optional)</li>
+<li>CssMin minfier v3.0.1 <a href="http://code.google.com/p/cssmin/">http://code.google.com/p/cssmin/</a> (optional)</li>
 </ul>
 <h2>Documentation </h2>
 <p>See <code>docs/doxygen/html</code> for html documentation. </p>
