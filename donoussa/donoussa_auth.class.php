@@ -14,10 +14,49 @@
  * @author     Christos Pontikis http://pontikis.net
  * @copyright  Christos Pontikis
  * @license    MIT http://opensource.org/licenses/MIT
- * @version    0.1.1 (05 Jul 2017)
+ * @version    0.1.2 (XX Jul 2017)
  *
  */
 class auth {
+
+	// arguments - no getters available (1)
+	private $ds;
+
+	// getters available (5)
+	private $user;
+	private $demographics;
+
+	private $matches;
+
+	private $last_error;
+	private $sql_error;
+
+	// other vars - no getters available (23)
+	private $t_users;
+	private $c_users_id;
+	private $c_users_email;
+	private $c_users_username;
+	private $c_users_password;
+	private $c_users_status;
+	private $c_users_email_verification_date;
+	private $c_users_email_date;
+	private $c_users_registration_date;
+	private $c_users_demographics_id;
+	private $t_demographics;
+	private $c_demographics_id;
+
+	private $username_min_chars;
+	private $username_max_chars;
+	private $username_chars;
+	private $username_special_chars;
+	private $usernames_reserved;
+
+	private $password_min_chars;
+	private $password_max_chars;
+	private $password_chars;
+	private $password_special_chars;
+	private $password_allow_space;
+	private $password_min_strength;
 
 	/**
 	 * Constructor
@@ -31,7 +70,7 @@ class auth {
 		$this->ds = $ds;
 
 		$this->user = null;
-		$this->demographics= null;
+		$this->demographics = null;
 
 		$this->matches = null;
 
@@ -100,6 +139,42 @@ class auth {
 		$this->password_min_strength = $opt['password_min_strength'];
 	}
 
+
+	// public functions - getters ----------------------------------------------
+
+	public function getUser() {
+		return $this->user;
+	}
+
+	public function getDemographics() {
+		return $this->demographics;
+	}
+
+	public function getMatches() {
+		return $this->matches;
+	}
+
+	public function getLastError() {
+		return $this->last_error;
+	}
+
+	public function getSqlError() {
+		return $this->sql_error;
+	}
+
+	// public functions - setters ----------------------------------------------
+
+	/**
+	 * Set option
+	 *
+	 * @param $opt
+	 * @param $val
+	 */
+	public function setOption($opt, $val) {
+		$this->$opt = $val;
+	}
+
+	// public functions - main methods -----------------------------------------
 
 	/**
 	 *
@@ -398,10 +473,12 @@ class auth {
 					// check if email is verified
 					if($email_verification == 'registration' &&
 						$a_user[0][$c_users_email_date] == $a_user[0][$c_users_registration_date] &&
-						!$a_user[0][$c_users_email_verification_date]) {
+						!$a_user[0][$c_users_email_verification_date]
+					) {
 						$this->last_error = 'email_not_verified';
 					} else if($email_verification == 'always' &&
-						!$a_user[0][$c_users_email_verification_date]) {
+						!$a_user[0][$c_users_email_verification_date]
+					) {
 						$this->last_error = 'email_not_verified';
 					} else {
 
@@ -500,7 +577,8 @@ class auth {
 				$this->last_error = 'account_is_not_active';
 			} else if($email_verification == 'registration' &&
 				$a_user[0][$c_users_email_date] == $a_user[0][$c_users_registration_date] &&
-				!$a_user[0][$c_users_email_verification_date]) {
+				!$a_user[0][$c_users_email_verification_date]
+			) {
 				$this->last_error = 'email_not_verified';
 			} else if($email_verification == 'always' && !$a_user[0][$c_users_email_verification_date]) {
 				$this->last_error = 'email_not_verified';
@@ -682,16 +760,4 @@ class auth {
 	public function getDomainFromEmail($email) {
 		return substr(strrchr($email, '@'), 1);
 	}
-
-
-	/**
-	 * Set option
-	 *
-	 * @param $opt
-	 * @param $val
-	 */
-	public function set_option($opt, $val) {
-		$this->$opt = $val;
-	}
-
 }
