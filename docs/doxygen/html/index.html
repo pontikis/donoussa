@@ -121,7 +121,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <tr>
 <td>**Database abstraction layer** </td><td>YES </td><td>YES <a href="https://github.com/pontikis/dacapo">https://github.com/pontikis/dacapo</a> (MySQLi, PostgreSQL) </td></tr>
 <tr>
-<td>**User/Roles functionality** </td><td>YES </td><td>YES </td></tr>
+<td>**User/Roles functionality** </td><td>YES </td><td>YES <a href="https://github.com/pontikis/ithaca">https://github.com/pontikis/ithaca</a> </td></tr>
 <tr>
 <td>**AJAX CSRF protection** </td><td>Usually </td><td>YES </td></tr>
 <tr>
@@ -131,12 +131,18 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <tr>
 <td>**Multilanguage support** </td><td>Usually </td><td>YES (using gettext and php-intl) </td></tr>
 <tr>
-<td>**Manage assets (CSS, JS)** </td><td>Usually (using Composer <a href="https://getcomposer.org/">https://getcomposer.org/</a>) </td><td>Assets are managed internally. Minify and bundle option available. Force reload using pseudo query string. </td></tr>
+<td>**Manage assets (CSS, JS)** </td><td>Usually (using Composer <a href="https://getcomposer.org/">https://getcomposer.org/</a>) </td><td>Assets are managed internally. Minify and bundle option available (Javascript Minifier built in PHP <a href="https://github.com/tedivm/JShrink">https://github.com/tedivm/JShrink</a> and CssMin minfier <a href="http://code.google.com/p/cssmin/">http://code.google.com/p/cssmin/</a>). Force reload JS and CSS assets using pseudo query string. </td></tr>
 <tr>
 <td>**Prevent direct URL download** </td><td>? </td><td>YES </td></tr>
 <tr>
 <td>**Integrated unit testing support** </td><td>Usually </td><td>NO </td></tr>
 </table>
+<h2>External classes </h2>
+<ul>
+<li>Dacapo (Simple PHP database wrapper) <a href="https://github.com/pontikis/dacapo">https://github.com/pontikis/dacapo</a></li>
+<li>Javascript Minifier built in PHP v1.1.0 <a href="https://github.com/tedivm/JShrink">https://github.com/tedivm/JShrink</a> (optional)</li>
+<li>CssMin minfier <a href="http://code.google.com/p/cssmin/">http://code.google.com/p/cssmin/</a> (optional)</li>
+</ul>
 <h2>Documentation </h2>
 <p>See <code>docs/doxygen/html</code> for html documentation. </p>
 </div></div><!-- contents -->

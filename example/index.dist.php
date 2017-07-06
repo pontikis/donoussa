@@ -5,8 +5,8 @@
 require_once 'conf/settings.php';
 require_once 'conf/init.php';
 
-require_once C_CLASS_DONOUSSA_PATH;
 require_once C_CLASS_DACAPO_PATH;
+require_once C_CLASS_DONOUSSA_PATH;
 
 $ds = new dacapo($conf['db'], $conf['mc']);
 $ds->set_option('use_pst', true);
@@ -20,6 +20,7 @@ $options = array(
 );
 
 $app = new donoussa($ds, $dependencies, $options);
+
 if($app->front_controller()) {
 
 	if($app->getRedirect()) {

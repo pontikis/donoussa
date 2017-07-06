@@ -31,15 +31,21 @@ Compare     | Advanced MVC Frameworks | Donoussa
 **Controllers** | Front controller will establish a "loader" object to “translate” the requested URL into an instance of the relevant controller class. Controllers, models and views are individual files organized in relevant folders of the same name. | Front controller will include the appropriate “model” and “view” using Dynamic Lookup Invocation from database (or memcached, json, xml etc)
 **Views** | Views can be either stand-alone or use a template | Views are HTML files with embedded PHP
 **Database abstraction layer** | YES | YES https://github.com/pontikis/dacapo (MySQLi, PostgreSQL)
-**User/Roles functionality** | YES | YES
+**User/Roles functionality** | YES | YES https://github.com/pontikis/ithaca
 **AJAX CSRF protection** | Usually | YES
 **Class Autoloading** | YES | NO 
 **Use a Registry object** | YES | NO 
 **Multilanguage support** | Usually | YES (using gettext and php-intl)
-**Manage assets (CSS, JS)** | Usually (using Composer https://getcomposer.org/) | Assets are managed internally. Minify and bundle option available. Force reload using pseudo query string.
+**Manage assets (CSS, JS)** | Usually (using Composer https://getcomposer.org/) | Assets are managed internally. Minify and bundle option available (Javascript Minifier built in PHP https://github.com/tedivm/JShrink and CssMin minfier http://code.google.com/p/cssmin/). Force reload JS and CSS assets using pseudo query string.
 **Prevent direct URL download** | ? |YES
 **Integrated unit testing support** | Usually | NO
 
+External classes
+----------------
+
+* Dacapo (Simple PHP database wrapper) https://github.com/pontikis/dacapo
+* Javascript Minifier built in PHP v1.1.0 https://github.com/tedivm/JShrink (optional)
+* CssMin minfier http://code.google.com/p/cssmin/ (optional)
 
 Documentation
 -------------

@@ -1,9 +1,9 @@
 var indexSectionsWithContent =
 {
-  0: "$_acdfgiprs",
-  1: "ad",
+  0: "$_cdfgr",
+  1: "d",
   2: "cdr",
-  3: "_cfgips",
+  3: "_cfg",
   4: "$",
   5: "cd"
 };
