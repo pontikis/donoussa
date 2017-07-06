@@ -7,6 +7,8 @@ require_once 'conf/init.php';
 
 require_once C_CLASS_DACAPO_PATH;
 require_once C_CLASS_DONOUSSA_PATH;
+require_once C_JSHRINK_PATH;
+require_once C_CSSMIN_PATH;
 
 $ds = new dacapo($conf['db'], $conf['mc']);
 $ds->set_option('use_pst', true);

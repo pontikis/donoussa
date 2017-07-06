@@ -45,7 +45,7 @@ External classes
 
 * Dacapo (Simple PHP database wrapper) https://github.com/pontikis/dacapo
 * Javascript Minifier built in PHP v1.1.0 https://github.com/tedivm/JShrink (optional)
-* CssMin minfier http://code.google.com/p/cssmin/ (optional)
+* CssMin minfier v3.0.1 http://code.google.com/p/cssmin/ (optional)
 
 Documentation
 -------------

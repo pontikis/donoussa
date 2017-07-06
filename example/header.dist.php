@@ -67,13 +67,6 @@
 
 <body>
 
-<!-- Navbar
-============================================================================ -->
-<?php
-$menu_id = isset($_SESSION['user_role_id']) ? $_SESSION['user_role_id'] : '0';
-include_once C_PROJECT_PATH . '/app/common/menu/menu_' . $menu_id . '.php';
-?>
-
 <!-- Main section
 ============================================================================ -->
 <section class="main">
