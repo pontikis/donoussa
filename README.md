@@ -15,7 +15,7 @@ At a glance
 * copy .htaccess.dist to /.htaccess (Apache ``mod_rewrite`` required)
 * copy ``settings.dist.php`` to ``conf/settings.php`` and configure
 * copy ``init.dist.php`` to ``conf/init.php`` and configure it
-* add donoussa tables in database (page_properties, page_dependencies, page_url), see ``sql`` folder
+* add donoussa tables in a database (page_properties, page_dependencies, page_url), see ``sql`` folder. In table ``page_dependencies`` create columns for each key in array ``$conf['dependencies']`` (example in ``settings.dist.php``).
 
 MVC comparison
 --------------
