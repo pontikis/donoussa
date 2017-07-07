@@ -10,11 +10,11 @@ Copyright Christos Pontikis http://www.pontikis.net
 License [MIT](https://github.com/pontikis/donoussa/blob/master/MIT_LICENSE)
 
 
-Upcoming Release 0.9.1 (XX Jul 2017)
+Upcoming Release 0.9.1 (07 Jul 2017)
 ---------------------------
 
 * action as alias of another action #5
-
+* improve documentation #4
 
 Release 0.9.0 (05 Jul 2017)
 ---------------------------
