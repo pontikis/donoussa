@@ -97,7 +97,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <li>copy .htaccess.dist to /.htaccess (Apache <code>mod_rewrite</code> required)</li>
 <li>copy <code>settings.dist.php</code> to <code>conf/settings.php</code> and configure</li>
 <li>copy <code>init.dist.php</code> to <code>conf/init.php</code> and configure it</li>
-<li>add donoussa tables in database (page_properties, page_dependencies, page_url), see <code>sql</code> folder</li>
+<li>add donoussa tables in a database (page_properties, page_dependencies, page_url), see <code>sql</code> folder. In table <code>page_dependencies</code> create columns for each key in array <code>$conf['dependencies']</code> (example in <code>settings.dist.php</code>).</li>
 </ul>
 <h2>MVC comparison </h2>
 <table class="doxtable">
@@ -143,7 +143,8 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <li>CssMin minfier v3.0.1 <a href="http://code.google.com/p/cssmin/">http://code.google.com/p/cssmin/</a> (optional)</li>
 </ul>
 <h2>Documentation </h2>
-<p>See <code>docs/doxygen/html</code> for html documentation. </p>
+<p>See <code>docs/doxygen/html</code> for html documentation.</p>
+<p>See also <code>example</code> folder. </p>
 </div></div><!-- contents -->
 <!-- HTML footer for doxygen 1.8.8-->
 <!-- start footer part -->

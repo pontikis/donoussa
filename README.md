@@ -49,4 +49,6 @@ External classes
 Documentation
 -------------
 
-See ``docs/doxygen/html`` for html documentation. 
+See ``docs/doxygen/html`` for html documentation.
+ 
+See also ``example`` folder. 
