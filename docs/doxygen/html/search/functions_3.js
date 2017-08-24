@@ -1,5 +1,6 @@
 var searchData=
 [
+  ['getajaxnotauthenticated',['getAjaxNotAuthenticated',['../classdonoussa.html#a4f6d4472cf1b8d19f691b8cc80f40701',1,'donoussa']]],
   ['getajaxrequest',['getAjaxRequest',['../classdonoussa.html#ac5929a73e5117e0e7fd57b26c665b36d',1,'donoussa']]],
   ['getfooter',['getFooter',['../classdonoussa.html#afd65368c3ca63e81eeefe796a85201ba',1,'donoussa']]],
   ['getheader',['getHeader',['../classdonoussa.html#a614834f1605e407376028e8c82298c82',1,'donoussa']]],

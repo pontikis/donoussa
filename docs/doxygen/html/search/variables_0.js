@@ -1,6 +1,7 @@
 var searchData=
 [
   ['_24action_5furl',['$action_url',['../classdonoussa.html#a22b67a5ff5047b9ca0d74c1f975fcb91',1,'donoussa']]],
+  ['_24ajax_5fnot_5fauthenticated',['$ajax_not_authenticated',['../classdonoussa.html#a5f8c14ab05f94eef240a0aaf7619acd1',1,'donoussa']]],
   ['_24ajax_5frequest',['$ajax_request',['../classdonoussa.html#a4319e8324762d8c8b76560b57eb20dc0',1,'donoussa']]],
   ['_24alias_5fof_5fajax_5furl',['$alias_of_ajax_url',['../classdonoussa.html#a9469e662bbf31d872980c6f428c629f0',1,'donoussa']]],
   ['_24config',['$config',['../classdonoussa.html#a49c7011be9c979d9174c52a8b83e5d8e',1,'donoussa']]],

@@ -14,7 +14,7 @@
  * @author     Christos Pontikis http://pontikis.net
  * @copyright  Christos Pontikis
  * @license    MIT http://opensource.org/licenses/MIT
- * @version    0.9.1 (07 Jul 2017)
+ * @version    0.9.2 (XX XXX 2017)
  */
 class donoussa {
 
@@ -44,6 +44,7 @@ class donoussa {
 	private $modal_confirm;
 	private $ajax_request;
 	private $redirect;
+	private $ajax_not_authenticated;
 	private $last_error;
 	private $last_error_code;
 	private $log;
@@ -140,6 +141,7 @@ class donoussa {
 		$this->modal_confirm = null;
 		$this->ajax_request = null;
 		$this->redirect = null;
+		$this->ajax_not_authenticated = null;
 		$this->last_error = null;
 		$this->last_error_code = null;
 		$this->log = null;
@@ -225,6 +227,10 @@ class donoussa {
 
 	public function getRedirect() {
 		return $this->redirect;
+	}
+
+	public function getAjaxNotAuthenticated() {
+		return $this->ajax_not_authenticated;
 	}
 
 	public function getLastError() {
@@ -533,22 +539,26 @@ class donoussa {
 				return false;
 			}
 
+			$this->ajax_not_authenticated = false;
+
 			if($page_properties['auth_required']) {
 
 				// user is not authenticated
 				if((!isset($_SESSION['user_id'])) || ($_SESSION['user_id'] <= '0')) {
-					$this->last_error_code = 'user_authorization_needed';
-					$this->last_error = __METHOD__ . ' ' . "{$config['messages'][$this->last_error_code]} ($action_url)";
-					return false;
+
+					$this->ajax_not_authenticated = true;
+					return true;
+
 				} else {
 
 					// check access according to user role
 					if($page_properties['roles']) {
 						$a_roles = explode(',', $page_properties['roles']);
 						if(!in_array($_SESSION['user_role_id'], $a_roles)) {
-							$this->last_error_code = 'access_denied';
-							$this->last_error = __METHOD__ . ' ' . "{$config['messages'][$this->last_error_code]} ($action_url)";
-							return false;
+
+							$this->ajax_not_authenticated = true;
+							return true;
+
 						}
 					}
 
@@ -556,20 +566,20 @@ class donoussa {
 			}
 
 			// CSRF protection
-			/*			if(session_id() != '') {
-							if(array_key_exists('HTTP_X_CSRF_TOKEN', $_SERVER)) {
-								if(sha1(session_id() . $this->page_id) !== $_SERVER['HTTP_X_CSRF_TOKEN']) {
-									$this->last_error_code = 'csrf_token_not_match';
-									$this->last_error = __METHOD__ . ' ' . "{$config['messages'][$this->last_error_code]} ($action_url)";
-									return false;
-								}
-							}
-						}*/
+			if(session_id() != '') {
+				if(array_key_exists('HTTP_X_CSRF_TOKEN', $_SERVER)) {
+					if(sha1(session_id() . $this->page_id) !== $_SERVER['HTTP_X_CSRF_TOKEN']) {
+						$this->last_error_code = 'csrf_token_not_match';
+						$this->last_error = __METHOD__ . ' ' . "{$config['messages'][$this->last_error_code]} ($action_url)";
+						return false;
+					}
+				}
+			}
 
 			if($this->is_alias_of) {
 				$a_url = explode('/', $action_url);
 				// remove first element (the page_id of alias, which put to make unique the alias url)
-				array_splice($a_url, 0,2);
+				array_splice($a_url, 0, 2);
 				$this->alias_of_ajax_url = '/' . implode('/', $a_url);
 				$this->ajax_request = C_PROJECT_PATH . $this->alias_of_ajax_url;
 			} else {

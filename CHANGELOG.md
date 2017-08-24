@@ -10,7 +10,13 @@ Copyright Christos Pontikis http://www.pontikis.net
 License [MIT](https://github.com/pontikis/donoussa/blob/master/MIT_LICENSE)
 
 
-Upcoming Release 0.9.1 (07 Jul 2017)
+Upcoming Release 0.9.2 (XX XXX 2017)
+---------------------------
+
+* ajax not authenticated to redirect to login #8
+
+
+Release 0.9.1 (07 Jul 2017)
 ---------------------------
 
 * action as alias of another action #5
